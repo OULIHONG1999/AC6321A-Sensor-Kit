@@ -1,0 +1,26 @@
+CompileFlags:
+  Add:
+    - -w
+    - -Wno-unknown-warning-option
+    - -Wno-error
+    - -Wno-cpp
+    - -Wno-pragma-once-outside-header
+    - -ferror-limit=0
+    - -Wno-implicit-function-declaration
+    - -Wno-incompatible-function-pointer-types
+    - -DCONFIG_BOARD_AC632N_DEMO
+  Remove:
+    - -Werror
+    - -fallow-pointer-null
+    - -fprefer-gnu-section
+    - -fms-extensions
+Diagnostics:
+  Suppress:
+    - pp_file_not_found
+    - file_not_found
+    - drv_unknown_argument
+    - implicit-function-declaration
+  UnusedIncludes: None
+  ClangTidy:
+    Remove: [readability-identifier-naming]
+  SortDiagnosticOutput: false

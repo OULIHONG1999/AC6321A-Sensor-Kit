@@ -1,0 +1,104 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "AC63: \u5feb\u901f\u7f16\u8bd1\uff08\u7ec8\u7aef: python ... --build\uff09",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "chcp 65001>nul && python clangd_board_switcher.py --build"
+            ],
+            "problemMatcher": [],
+            "detail": "\u7ec8\u7aef\u6216\u6b64\u5904\u8fd0\u884c\u5747\u53ef\uff1b\u5e76\u884c make apps/spp_and_le/board/bd19",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false
+            }
+        },
+        {
+            "label": "AC63: \u6e05\u7406\u7f16\u8bd1\u8f93\u51fa\uff08\u7ec8\u7aef: python ... --clean\uff09",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "chcp 65001>nul && python clangd_board_switcher.py --clean"
+            ],
+            "problemMatcher": [],
+            "detail": "\u7ec8\u7aef\u6216\u6b64\u5904\u8fd0\u884c\u5747\u53ef\uff1b\u5220\u9664 bd19 \u76f8\u5173\u4ea7\u7269",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false
+            }
+        },
+        {
+            "label": "Clangd: \u9009\u62e9\u677f\u5b50\u5e76\u751f\u6210 compile_commands",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "chcp 65001>nul && python clangd_board_switcher.py --by-name ${input:clangdBoardTarget}"
+            ],
+            "problemMatcher": [],
+            "detail": "\u83dc\u5355\uff1a\u7ec8\u7aef \u2192 \u8fd0\u884c\u4efb\u52a1\u2026 \u2192 \u70b9\u672c\u9879 \u2192 \u9876\u90e8\u5f39\u51fa\u5217\u8868\uff08\u65e0\u9700\u53c2\u6570\u3001\u4e0d\u5360\u7528 Ctrl+Shift+B\uff09",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false
+            }
+        },
+        {
+            "label": "Clangd: \u4ec5\u540c\u6b65 IDE \u914d\u7f6e\uff08\u65e0\u53c2\u6570\uff0c\u7b49\u540c python clangd_board_switcher.py\uff09",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "chcp 65001>nul && python clangd_board_switcher.py"
+            ],
+            "problemMatcher": [],
+            "detail": "Makefile \u76ee\u6807\u53d8\u4e86\u65f6\u8dd1\u4e00\u6b21\uff1b\u4e0d\u5199 compile_commands",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "clangdBoardTarget",
+            "type": "pickString",
+            "description": "\u9009\u62e9 Makefile / \u677f\u7ea7\u76ee\u6807",
+            "options": [
+                "ac638n_spp_and_le",
+                "ac632n_spp_and_le",
+                "ac631n_spp_and_le",
+                "ac636n_spp_and_le",
+                "ac637n_spp_and_le",
+                "ac635n_spp_and_le",
+                "ac638n_hid",
+                "ac632n_hid",
+                "ac631n_hid",
+                "ac636n_hid",
+                "ac637n_hid",
+                "ac635n_hid",
+                "ac638n_mesh",
+                "ac632n_mesh",
+                "ac631n_mesh",
+                "ac636n_mesh",
+                "ac637n_mesh",
+                "ac635n_mesh"
+            ]
+        }
+    ]
+}
