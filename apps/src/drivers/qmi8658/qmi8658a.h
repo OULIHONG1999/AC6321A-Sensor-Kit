@@ -119,6 +119,15 @@
 #define QMI8658_CTRL7_ACC_EN_Msk        (1U << 0)
 #define QMI8658_CTRL7_ACC_EN            (1U << 0)
 
+/************************** STATUSINT (0x2D) 状态寄存器 **************************
+ *  bit1    : DRDY_GYR        陀螺仪数据就绪
+ *  bit0    : DRDY_ACC        加速度计数据就绪
+ */
+#define QMI8658_STATUSINT_DRDY_GYR_Pos  1U
+#define QMI8658_STATUSINT_DRDY_GYR_Msk  (1U << 1)
+#define QMI8658_STATUSINT_DRDY_ACC_Pos  0U
+#define QMI8658_STATUSINT_DRDY_ACC_Msk  (1U << 0)
+
 /************************** CTRL8 (0x09) 运动检测控制 **************************
  *  bit5    : TAP_EN          单击/双击使能
  *  bit4    : PEDO_EN         计步器使能
@@ -159,9 +168,12 @@ typedef struct {
     int16_t gyr_z;
 } QMI8658A_Data_t;
 
-// 函数声明
-void QMI8658A_Init(void);
-void QMI8658A_ReadData(QMI8658A_Data_t *data);
+int QMI8658A_Init(void);
+int QMI8658A_ReadData(QMI8658A_Data_t *data);
+int QMI8658A_ReadTemperature(float *temperature);
+int QMI8658A_IsDataReady(void);
+int QMI8658A_WaitForDataReady(int timeout_ms);
+void QMI8658A_SoftReset(void);
 
 
 #endif /* QMI8658A_H */
