@@ -5,6 +5,7 @@
 #include "os/os_api.h"
 
 static QMI8658_Type_t g_device_type = QMI8658_TYPE_UNKNOWN;
+static QMI8658_Calibration_t g_calibration = {0};
 
 static int qmi8658_read_reg(uint8_t dev_addr, uint8_t reg_addr, uint8_t *data) {
   int ret = i2c_bus_read_reg8(dev_addr, reg_addr);
@@ -152,6 +153,15 @@ int  QMI8658_ReadData(QMI8658_Data_t *data) {
   data->gyr_y = (int16_t)((buf[9] << 8) | buf[8]);
   data->gyr_z = (int16_t)((buf[11] << 8) | buf[10]);
 
+  if (g_calibration.calibrated) {
+    data->acc_x -= g_calibration.acc_offset_x;
+    data->acc_y -= g_calibration.acc_offset_y;
+    data->acc_z -= g_calibration.acc_offset_z;
+    data->gyr_x -= g_calibration.gyr_offset_x;
+    data->gyr_y -= g_calibration.gyr_offset_y;
+    data->gyr_z -= g_calibration.gyr_offset_z;
+  }
+
   QMI8658_DEBUG_PRINT("Data: A(%d,%d,%d) G(%d,%d,%d)\n",
     data->acc_x, data->acc_y, data->acc_z,
     data->gyr_x, data->gyr_y, data->gyr_z);
@@ -259,4 +269,120 @@ int  QMI8658_WaitForDataReady(int timeout_ms) {
 void QMI8658_SoftReset(void) {
   qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_RESET, QMI8658_SOFT_RESET_VAL);
   os_time_dly(10);
+}
+
+int QMI8658_CalibrateGyro(void) {
+  int ret;
+  int32_t gyr_x_sum = 0, gyr_y_sum = 0, gyr_z_sum = 0;
+  QMI8658_Data_t data;
+  const int samples = 100;
+
+  QMI8658_DEBUG_PRINT("Gyro calibration started...\n");
+  
+  for (int i = 0; i < samples; i++) {
+    ret = QMI8658_ReadData(&data);
+    if (ret < 0) {
+      QMI8658_DEBUG_PRINT("Gyro calibration failed: read data error\n");
+      return ret;
+    }
+    gyr_x_sum += data.gyr_x;
+    gyr_y_sum += data.gyr_y;
+    gyr_z_sum += data.gyr_z;
+    os_time_dly(10);
+  }
+  
+  g_calibration.gyr_offset_x = (int16_t)(gyr_x_sum / samples);
+  g_calibration.gyr_offset_y = (int16_t)(gyr_y_sum / samples);
+  g_calibration.gyr_offset_z = (int16_t)(gyr_z_sum / samples);
+  g_calibration.calibrated = 1;
+  
+  QMI8658_DEBUG_PRINT("Gyro calibration complete: (%d,%d,%d)\n",
+    g_calibration.gyr_offset_x,
+    g_calibration.gyr_offset_y,
+    g_calibration.gyr_offset_z);
+  
+  return 0;
+}
+
+int QMI8658_CalibrateAccel(void) {
+  int ret;
+  int32_t acc_x_sum = 0, acc_y_sum = 0, acc_z_sum = 0;
+  QMI8658_Data_t data;
+  const int samples = 100;
+  
+  QMI8658_DEBUG_PRINT("Accel calibration started...\n");
+  
+  for (int i = 0; i < samples; i++) {
+    ret = QMI8658_ReadData(&data);
+    if (ret < 0) {
+      QMI8658_DEBUG_PRINT("Accel calibration failed: read data error\n");
+      return ret;
+    }
+    acc_x_sum += data.acc_x;
+    acc_y_sum += data.acc_y;
+    acc_z_sum += data.acc_z;
+    os_time_dly(10);
+  }
+  
+  g_calibration.acc_offset_x = (int16_t)(acc_x_sum / samples);
+  g_calibration.acc_offset_y = (int16_t)(acc_y_sum / samples);
+  g_calibration.acc_offset_z = (int16_t)((acc_z_sum / samples) - QMI8658_ACC_SCALE_4G);
+  g_calibration.calibrated = 1;
+  
+  QMI8658_DEBUG_PRINT("Accel calibration complete: (%d,%d,%d)\n",
+    g_calibration.acc_offset_x,
+    g_calibration.acc_offset_y,
+    g_calibration.acc_offset_z);
+  
+  return 0;
+}
+
+int QMI8658_ApplyCalibration(void) {
+  int ret;
+  uint8_t cal_data[8];
+  
+  if (!g_calibration.calibrated) {
+    QMI8658_DEBUG_PRINT("No calibration data available\n");
+    return -1;
+  }
+  
+  cal_data[0] = (uint8_t)(g_calibration.gyr_offset_x & 0xFF);
+  cal_data[1] = (uint8_t)((g_calibration.gyr_offset_x >> 8) & 0xFF);
+  cal_data[2] = (uint8_t)(g_calibration.gyr_offset_y & 0xFF);
+  cal_data[3] = (uint8_t)((g_calibration.gyr_offset_y >> 8) & 0xFF);
+  cal_data[4] = (uint8_t)(g_calibration.gyr_offset_z & 0xFF);
+  cal_data[5] = (uint8_t)((g_calibration.gyr_offset_z >> 8) & 0xFF);
+  cal_data[6] = (uint8_t)(g_calibration.acc_offset_x & 0xFF);
+  cal_data[7] = (uint8_t)((g_calibration.acc_offset_x >> 8) & 0xFF);
+  
+  ret = i2c_bus_write_buf(BOARD_IMU_I2C_ADDR7, (uint8_t[]){QMI8658_REG_CAL1_L}, 2);
+  if (ret < 0) {
+    QMI8658_DEBUG_PRINT("Write gyro offset command failed\n");
+    return ret;
+  }
+  
+  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL9, QMI8658_CMD_GYR_OFFSET);
+  if (ret < 0) {
+    QMI8658_DEBUG_PRINT("Write gyro offset command failed\n");
+    return ret;
+  }
+  
+  QMI8658_DEBUG_PRINT("Calibration applied\n");
+  return 0;
+}
+
+int QMI8658_GetCalibration(QMI8658_Calibration_t *calib) {
+  if (calib == NULL) {
+    return -1;
+  }
+  *calib = g_calibration;
+  return 0;
+}
+
+int QMI8658_SetCalibration(QMI8658_Calibration_t *calib) {
+  if (calib == NULL) {
+    return -1;
+  }
+  g_calibration = *calib;
+  return 0;
 }

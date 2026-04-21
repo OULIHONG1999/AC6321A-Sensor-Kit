@@ -63,6 +63,15 @@ void mw_task(void *p_arg) {
     OLED_ShowString(0, 0, "QMI8658A", 8, 1);
   }
   
+  // 显示校准状态
+  QMI8658_Calibration_t calib;
+  QMI8658_GetCalibration(&calib);
+  if (calib.calibrated) {
+    OLED_ShowString(80, 0, "CAL", 8, 1);
+  } else {
+    OLED_ShowString(80, 0, "UNCAL", 8, 1);
+  }
+  
   // 显示标签
   OLED_ShowString(0, 16, "A:", 8, 1);
   OLED_ShowString(64, 16, "G:", 8, 1);
@@ -72,7 +81,38 @@ void mw_task(void *p_arg) {
   // 正常模式：读取并显示传感器数据
   QMI8658_Data_t data;
   float temperature;
+  uint32_t tick_count = 0;
   while (1) {
+    tick_count++;
+    
+    // 每60秒自动校准一次（如果未校准）
+    if (tick_count % 60000 == 0 && !calib.calibrated) {
+      OLED_Clear();
+      OLED_ShowString(24, 16, "Calibrating", 16, 1);
+      OLED_ShowString(24, 32, "Gyro...", 16, 1);
+      OLED_Refresh();
+      
+      if (QMI8658_CalibrateGyro() == 0) {
+        OLED_ShowString(24, 32, "Accel...", 16, 1);
+        OLED_Refresh();
+        QMI8658_CalibrateAccel();
+        QMI8658_GetCalibration(&calib);
+        
+        // 重新显示界面
+        OLED_Clear();
+        if (dev_type == QMI8658_TYPE_C) {
+          OLED_ShowString(0, 0, "QMI8658C", 8, 1);
+        } else {
+          OLED_ShowString(0, 0, "QMI8658A", 8, 1);
+        }
+        OLED_ShowString(80, 0, "CAL", 8, 1);
+        OLED_ShowString(0, 16, "A:", 8, 1);
+        OLED_ShowString(64, 16, "G:", 8, 1);
+        OLED_ShowString(0, 40, "T:", 8, 1);
+        OLED_Refresh();
+      }
+    }
+    
     if (QMI8658_ReadData(&data) < 0) {
       printf("QMI8658 read data failed\n");
       os_time_dly(10);

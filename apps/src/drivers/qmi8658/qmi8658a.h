@@ -204,6 +204,17 @@ typedef struct {
     float temp_c;       // 温度 (°C)
 } QMI8658_Physical_t;
 
+// 校准数据结构
+typedef struct {
+    int16_t gyr_offset_x;  // 陀螺仪X轴偏移
+    int16_t gyr_offset_y;  // 陀螺仪Y轴偏移
+    int16_t gyr_offset_z;  // 陀螺仪Z轴偏移
+    int16_t acc_offset_x;  // 加速度计X轴偏移
+    int16_t acc_offset_y;  // 加速度计Y轴偏移
+    int16_t acc_offset_z;  // 加速度计Z轴偏移
+    uint8_t calibrated;    // 是否已校准
+} QMI8658_Calibration_t;
+
 // 函数声明
 int  QMI8658_Init(void);
 QMI8658_Type_t QMI8658_GetDeviceType(void);
@@ -218,6 +229,13 @@ void QMI8658_SoftReset(void);
 float QMI8658_ConvertAccToG(int16_t raw);
 float QMI8658_ConvertGyroToDPS(int16_t raw);
 float QMI8658_ConvertTempToC(int16_t raw);
+
+// 校准函数
+int  QMI8658_CalibrateGyro(void);
+int  QMI8658_CalibrateAccel(void);
+int  QMI8658_ApplyCalibration(void);
+int  QMI8658_GetCalibration(QMI8658_Calibration_t *calib);
+int  QMI8658_SetCalibration(QMI8658_Calibration_t *calib);
 
 
 #endif /* QMI8658A_H */
