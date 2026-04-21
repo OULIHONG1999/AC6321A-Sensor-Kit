@@ -3,6 +3,15 @@
 
 #include <stdint.h>
 
+// 调试开关
+// #define QMI8658_DEBUG
+
+#ifdef QMI8658_DEBUG
+  #define QMI8658_DEBUG_PRINT(fmt, ...) printf("[QMI8658] " fmt, ##__VA_ARGS__)
+#else
+  #define QMI8658_DEBUG_PRINT(fmt, ...)
+#endif
+
 /************************** CTRL1 (0x02) 串行接口 & 基本配置 **************************
  *  bit7    : SPI4_3          0=SPI 4线, 1=SPI 3线
  *  bit6    : ADDR_AI         0=禁止地址自动增量, 1=使能地址自动增量 (推荐开启)
