@@ -167,6 +167,70 @@
 #define QMI8658_CMD_RST_PEDO            0x0F
 #define QMI8658_CMD_CALIB               0xA2
 
+/************************** FIFO 配置 (0x14) **************************
+ *  bit7    : FIFO_EN         FIFO使能
+ *  bit6    : FIFO_STOP       FIFO停止（数据满时停止）
+ *  bit5    : FIFO_AE         姿态引擎数据使能
+ *  bit4    : TIME_EN         时间戳使能
+ *  bit3    : TEMP_EN         温度数据使能
+ *  bit2    : GYR_EN          陀螺仪数据使能
+ *  bit1    : ACC_EN          加速度计数据使能
+ *  bit0    : SLINK           顺序链接模式
+ */
+#define QMI8658_FIFO_CTRL_EN_Pos        7U
+#define QMI8658_FIFO_CTRL_EN_Msk        (1U << 7)
+#define QMI8658_FIFO_CTRL_EN            (1U << 7)
+
+#define QMI8658_FIFO_CTRL_STOP_Pos      6U
+#define QMI8658_FIFO_CTRL_STOP_Msk       (1U << 6)
+#define QMI8658_FIFO_CTRL_STOP          (1U << 6)
+
+#define QMI8658_FIFO_CTRL_AE_Pos        5U
+#define QMI8658_FIFO_CTRL_AE_Msk        (1U << 5)
+#define QMI8658_FIFO_CTRL_AE            (1U << 5)
+
+#define QMI8658_FIFO_CTRL_TIME_Pos      4U
+#define QMI8658_FIFO_CTRL_TIME_Msk      (1U << 4)
+#define QMI8658_FIFO_CTRL_TIME          (1U << 4)
+
+#define QMI8658_FIFO_CTRL_TEMP_Pos      3U
+#define QMI8658_FIFO_CTRL_TEMP_Msk      (1U << 3)
+#define QMI8658_FIFO_CTRL_TEMP          (1U << 3)
+
+#define QMI8658_FIFO_CTRL_GYR_Pos       2U
+#define QMI8658_FIFO_CTRL_GYR_Msk       (1U << 2)
+#define QMI8658_FIFO_CTRL_GYR           (1U << 2)
+
+#define QMI8658_FIFO_CTRL_ACC_Pos       1U
+#define QMI8658_FIFO_CTRL_ACC_Msk       (1U << 1)
+#define QMI8658_FIFO_CTRL_ACC           (1U << 1)
+
+#define QMI8658_FIFO_CTRL_SLINK_Pos     0U
+#define QMI8658_FIFO_CTRL_SLINK_Msk     (1U << 0)
+#define QMI8658_FIFO_CTRL_SLINK         (1U << 0)
+
+/************************** FIFO 状态 (0x16) **************************
+ *  bit7    : FIFO_EMPTY      FIFO为空
+ *  bit6    : FIFO_FULL       FIFO为满
+ *  bit5    : FIFO_OVF        FIFO溢出
+ *  bit4    : FIFO_WTM        FIFO达到水印阈值
+ *  bit3-0  : FIFO_COUNT      FIFO数据计数
+ */
+#define QMI8658_FIFO_STATUS_EMPTY_Pos   7U
+#define QMI8658_FIFO_STATUS_EMPTY_Msk   (1U << 7)
+
+#define QMI8658_FIFO_STATUS_FULL_Pos    6U
+#define QMI8658_FIFO_STATUS_FULL_Msk   (1U << 6)
+
+#define QMI8658_FIFO_STATUS_OVF_Pos     5U
+#define QMI8658_FIFO_STATUS_OVF_Msk    (1U << 5)
+
+#define QMI8658_FIFO_STATUS_WTM_Pos     4U
+#define QMI8658_FIFO_STATUS_WTM_Msk    (1U << 4)
+
+#define QMI8658_FIFO_STATUS_COUNT_Pos   0U
+#define QMI8658_FIFO_STATUS_COUNT_Msk   (0xFU << 0)
+
 // 设备类型枚举
 typedef enum {
     QMI8658_TYPE_UNKNOWN = 0,
@@ -236,6 +300,13 @@ int  QMI8658_CalibrateAccel(void);
 int  QMI8658_ApplyCalibration(void);
 int  QMI8658_GetCalibration(QMI8658_Calibration_t *calib);
 int  QMI8658_SetCalibration(QMI8658_Calibration_t *calib);
+
+// FIFO函数
+int  QMI8658_FifoInit(void);
+int  QMI8658_FifoRead(QMI8658_Data_t *data, uint8_t max_count, uint8_t *actual_count);
+int  QMI8658_FifoGetStatus(uint8_t *status);
+int  QMI8658_FifoGetCount(uint8_t *count);
+int  QMI8658_FifoReset(void);
 
 
 #endif /* QMI8658A_H */

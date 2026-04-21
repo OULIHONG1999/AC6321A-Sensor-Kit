@@ -6,6 +6,7 @@
 
 static QMI8658_Type_t g_device_type = QMI8658_TYPE_UNKNOWN;
 static QMI8658_Calibration_t g_calibration = {0};
+static uint8_t g_fifo_buffer[256];
 
 static int qmi8658_read_reg(uint8_t dev_addr, uint8_t reg_addr, uint8_t *data) {
   int ret = i2c_bus_read_reg8(dev_addr, reg_addr);
@@ -384,5 +385,117 @@ int QMI8658_SetCalibration(QMI8658_Calibration_t *calib) {
     return -1;
   }
   g_calibration = *calib;
+  return 0;
+}
+
+int QMI8658_FifoInit(void) {
+  int ret;
+  
+  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_FIFO_WTM_TH, 8);
+  if (ret < 0) {
+    QMI8658_DEBUG_PRINT("FIFO init failed: write WTM\n");
+    return ret;
+  }
+  
+  uint8_t fifo_config = QMI8658_FIFO_CTRL_EN | QMI8658_FIFO_CTRL_ACC | QMI8658_FIFO_CTRL_GYR;
+  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_FIFO_CTRL, fifo_config);
+  if (ret < 0) {
+    QMI8658_DEBUG_PRINT("FIFO init failed: write CTRL\n");
+    return ret;
+  }
+  
+  QMI8658_DEBUG_PRINT("FIFO initialized\n");
+  return 0;
+}
+
+int QMI8658_FifoRead(QMI8658_Data_t *data, uint8_t max_count, uint8_t *actual_count) {
+  uint8_t status;
+  uint8_t fifo_count;
+  int ret;
+  
+  if (data == NULL || actual_count == NULL) {
+    return -1;
+  }
+  
+  ret = qmi8658_read_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_FIFO_STATUS, &status);
+  if (ret < 0) {
+    QMI8658_DEBUG_PRINT("FIFO read failed: read status\n");
+    return ret;
+  }
+  
+  fifo_count = (status >> 4) & 0x0F;
+  if (fifo_count == 0) {
+    *actual_count = 0;
+    return 0;
+  }
+  
+  if (fifo_count > max_count) {
+    fifo_count = max_count;
+  }
+  
+  uint8_t frame_size = 12;
+  ret = qmi8658_read_regs(BOARD_IMU_I2C_ADDR7, QMI8658_REG_FIFO_DATA, g_fifo_buffer, frame_size * fifo_count);
+  if (ret < 0) {
+    QMI8658_DEBUG_PRINT("FIFO read failed: read data\n");
+    return ret;
+  }
+  
+  for (uint8_t i = 0; i < fifo_count; i++) {
+    uint8_t offset = i * frame_size;
+    data[i].acc_x = (int16_t)((g_fifo_buffer[offset + 1] << 8) | g_fifo_buffer[offset + 0]);
+    data[i].acc_y = (int16_t)((g_fifo_buffer[offset + 3] << 8) | g_fifo_buffer[offset + 2]);
+    data[i].acc_z = (int16_t)((g_fifo_buffer[offset + 5] << 8) | g_fifo_buffer[offset + 4]);
+    data[i].gyr_x = (int16_t)((g_fifo_buffer[offset + 7] << 8) | g_fifo_buffer[offset + 6]);
+    data[i].gyr_y = (int16_t)((g_fifo_buffer[offset + 9] << 8) | g_fifo_buffer[offset + 8]);
+    data[i].gyr_z = (int16_t)((g_fifo_buffer[offset + 11] << 8) | g_fifo_buffer[offset + 10]);
+    
+    if (g_calibration.calibrated) {
+      data[i].acc_x -= g_calibration.acc_offset_x;
+      data[i].acc_y -= g_calibration.acc_offset_y;
+      data[i].acc_z -= g_calibration.acc_offset_z;
+      data[i].gyr_x -= g_calibration.gyr_offset_x;
+      data[i].gyr_y -= g_calibration.gyr_offset_y;
+      data[i].gyr_z -= g_calibration.gyr_offset_z;
+    }
+  }
+  
+  *actual_count = fifo_count;
+  
+  QMI8658_DEBUG_PRINT("FIFO read: %d frames\n", fifo_count);
+  return 0;
+}
+
+int QMI8658_FifoGetStatus(uint8_t *status) {
+  if (status == NULL) {
+    return -1;
+  }
+  return qmi8658_read_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_FIFO_STATUS, status);
+}
+
+int QMI8658_FifoGetCount(uint8_t *count) {
+  uint8_t status;
+  int ret;
+  
+  if (count == NULL) {
+    return -1;
+  }
+  
+  ret = qmi8658_read_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_FIFO_STATUS, &status);
+  if (ret < 0) {
+    return ret;
+  }
+  
+  *count = (status >> 4) & 0x0F;
+  return 0;
+}
+
+int QMI8658_FifoReset(void) {
+  int ret;
+  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL9, QMI8658_CMD_RST_FIFO);
+  if (ret < 0) {
+    QMI8658_DEBUG_PRINT("FIFO reset failed\n");
+    return ret;
+  }
+  QMI8658_DEBUG_PRINT("FIFO reset\n");
   return 0;
 }
