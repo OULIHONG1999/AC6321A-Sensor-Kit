@@ -174,7 +174,16 @@ typedef enum {
     QMI8658_TYPE_C = 0x79
 } QMI8658_Type_t;
 
-// 数据结构
+// 量程配置（与qmi8658a.c中实际配置一致）
+#define QMI8658_ACC_RANGE       4       // ±4G
+#define QMI8658_GYR_RANGE       2000    // ±2000dps
+
+// 比例因子（LSB/单位）
+#define QMI8658_ACC_SCALE_4G    8192.0f     // LSB/g
+#define QMI8658_GYR_SCALE_2000DPS 16.0f     // LSB/dps
+#define QMI8658_TEMP_SCALE      256.0f      // LSB/°C
+
+// 数据结构（原始数据）
 typedef struct {
     int16_t acc_x;
     int16_t acc_y;
@@ -184,14 +193,31 @@ typedef struct {
     int16_t gyr_z;
 } QMI8658_Data_t;
 
+// 物理量数据结构
+typedef struct {
+    float acc_x_g;      // 加速度 (g)
+    float acc_y_g;
+    float acc_z_g;
+    float gyr_x_dps;    // 角速度 (°/s)
+    float gyr_y_dps;
+    float gyr_z_dps;
+    float temp_c;       // 温度 (°C)
+} QMI8658_Physical_t;
+
 // 函数声明
 int  QMI8658_Init(void);
 QMI8658_Type_t QMI8658_GetDeviceType(void);
 int  QMI8658_ReadData(QMI8658_Data_t *data);
+int  QMI8658_ReadPhysical(QMI8658_Physical_t *physical);
 int  QMI8658_ReadTemperature(float *temperature);
 int  QMI8658_IsDataReady(void);
 int  QMI8658_WaitForDataReady(int timeout_ms);
 void QMI8658_SoftReset(void);
+
+// 数据转换函数
+float QMI8658_ConvertAccToG(int16_t raw);
+float QMI8658_ConvertGyroToDPS(int16_t raw);
+float QMI8658_ConvertTempToC(int16_t raw);
 
 
 #endif /* QMI8658A_H */

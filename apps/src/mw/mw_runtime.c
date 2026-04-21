@@ -8,6 +8,7 @@
 #include "../drivers/oled/oled.h"
 #include "../drivers/oled/oled_utils.h"
 #include "../drivers/qmi8658/qmi8658a.h"
+#include "../drivers/qmi8658/qmi8658_reg.h"
 #include "os/os_api.h"
 #include "timer.h"
 #include "typedef.h"
@@ -77,41 +78,32 @@ void mw_task(void *p_arg) {
       os_time_dly(10);
       continue;
     }
-
+    
     QMI8658_ReadTemperature(&temperature);
+    int16_t raw_temp = (int16_t)((temperature - 25.0f) * 256.0f);
 
-    // printf("Acc: ax=%d, ay=%d, az=%d\nGyr: gx=%d, gy=%d, gz=%d\nTemp: %d\n",
-    //        data.acc_x, data.acc_y, data.acc_z,
-    //        data.gyr_x, data.gyr_y, data.gyr_z,
-    //        (int)temperature);
-
-    // 将整数转为固定长度字符串
     char acc_x_str[8], acc_y_str[8], acc_z_str[8];
     char gyr_x_str[8], gyr_y_str[8], gyr_z_str[8];
     char temp_str[8];
     
-    int_to_str(data.acc_x, acc_x_str, 5);
-    int_to_str(data.acc_y, acc_y_str, 5);
-    int_to_str(data.acc_z, acc_z_str, 5);
-    int_to_str(data.gyr_x, gyr_x_str, 5);
-    int_to_str(data.gyr_y, gyr_y_str, 5);
-    int_to_str(data.gyr_z, gyr_z_str, 5);
-    int_to_str((int)temperature, temp_str, 5);
+    scaled_int_to_str(data.acc_x, acc_x_str, 7, 8192);
+    scaled_int_to_str(data.acc_y, acc_y_str, 7, 8192);
+    scaled_int_to_str(data.acc_z, acc_z_str, 7, 8192);
+    scaled_int_to_str(data.gyr_x, gyr_x_str, 7, 16);
+    scaled_int_to_str(data.gyr_y, gyr_y_str, 7, 16);
+    scaled_int_to_str(data.gyr_z, gyr_z_str, 7, 16);
+    scaled_int_to_str(raw_temp, temp_str, 7, 256);
     
-    // 显示加速度数据 (左边)
     OLED_ShowString(16, 16, (u8*)acc_x_str, 8, 1);
     OLED_ShowString(16, 24, (u8*)acc_y_str, 8, 1);
     OLED_ShowString(16, 32, (u8*)acc_z_str, 8, 1);
     
-    // 显示陀螺仪数据 (右边)
     OLED_ShowString(80, 16, (u8*)gyr_x_str, 8, 1);
     OLED_ShowString(80, 24, (u8*)gyr_y_str, 8, 1);
     OLED_ShowString(80, 32, (u8 *)gyr_z_str, 8, 1);
 
-    // 显示温度 (底部居中)
     OLED_ShowString(16, 40, (u8*)temp_str, 8, 1);
     
-    // 刷新显示
     OLED_Refresh();
     os_time_dly(1);
   }

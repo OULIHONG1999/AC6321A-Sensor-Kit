@@ -175,9 +175,60 @@ int  QMI8658_ReadTemperature(float *temperature) {
   }
 
   raw_temp = (int16_t)((buf[1] << 8) | buf[0]);
-  *temperature = 25.0f + (raw_temp / 512.0f);
+  *temperature = 25.0f + (raw_temp / 256.0f);
 
   QMI8658_DEBUG_PRINT("Temp: %.2f\n", *temperature);
+
+  return 0;
+}
+
+float QMI8658_ConvertAccToG(int16_t raw) {
+  return (float)raw / QMI8658_ACC_SCALE_4G;
+}
+
+float QMI8658_ConvertGyroToDPS(int16_t raw) {
+  return (float)raw / QMI8658_GYR_SCALE_2000DPS;
+}
+
+float QMI8658_ConvertTempToC(int16_t raw) {
+  return 25.0f + (float)raw / QMI8658_TEMP_SCALE;
+}
+
+int QMI8658_ReadPhysical(QMI8658_Physical_t *physical) {
+  QMI8658_Data_t raw_data;
+  uint8_t temp_buf[2];
+  int16_t raw_temp;
+  int ret;
+
+  if (physical == NULL) {
+    return -1;
+  }
+
+  ret = QMI8658_ReadData(&raw_data);
+  if (ret < 0) {
+    return ret;
+  }
+
+  physical->acc_x_g = QMI8658_ConvertAccToG(raw_data.acc_x);
+  physical->acc_y_g = QMI8658_ConvertAccToG(raw_data.acc_y);
+  physical->acc_z_g = QMI8658_ConvertAccToG(raw_data.acc_z);
+  physical->gyr_x_dps = QMI8658_ConvertGyroToDPS(raw_data.gyr_x);
+  physical->gyr_y_dps = QMI8658_ConvertGyroToDPS(raw_data.gyr_y);
+  physical->gyr_z_dps = QMI8658_ConvertGyroToDPS(raw_data.gyr_z);
+
+  ret = qmi8658_read_regs(BOARD_IMU_I2C_ADDR7, QMI8658_REG_TEMP_L, temp_buf, 2);
+  if (ret < 0) {
+    printf("[QMI8658] ERROR: read temperature failed: %d\n", ret);
+    physical->temp_c = 0.0f;
+  } else {
+    raw_temp = (int16_t)((temp_buf[1] << 8) | temp_buf[0]);
+    physical->temp_c = QMI8658_ConvertTempToC(raw_temp);
+  }
+
+  QMI8658_DEBUG_PRINT("Physical: A(%d,%d,%d)g G(%d,%d,%d)dps T(%d)C\n",
+    (int)(physical->acc_x_g * 100), (int)(physical->acc_y_g * 100), (int)(physical->acc_z_g * 100),
+    (int)(physical->gyr_x_dps * 100), (int)(physical->gyr_y_dps * 100), (int)(physical->gyr_z_dps * 100),
+    (int)(physical->temp_c * 100));
 
   return 0;
 }
