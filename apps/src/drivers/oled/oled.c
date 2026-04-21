@@ -5,7 +5,7 @@
 #include "oled.h"
 #include "stdlib.h"
 #include "oledfont.h"
-#include "../i2c/i2c_bus_bb.h"
+#include "../i2c/i2c_bus.h"
 
 u8 OLED_GRAM[OLED_GRAM_COLUMNS][OLED_PAGE_NUM];
 
@@ -39,9 +39,8 @@ void OLED_WR_Byte(u8 dat, u8 mode)
 	u8 buf[2];
 	buf[0] = mode ? 0x40 : 0x00;
 	buf[1] = dat;
-	(void)i2c_bus_bb_write7(BOARD_OLED_I2C_ADDR7, buf, 2);
+	(void)i2c_bus_write_buf(BOARD_OLED_I2C_ADDR7, buf, 2);
 }
-
 
 
 void OEL_SendCmdParam(CmdParam_t *cmd_param)
@@ -87,7 +86,7 @@ void OLED_Refresh(void)
 			for (n = 0; n < OLED_GRAM_COLUMNS; n++) {
 				buf[1 + n] = OLED_GRAM[n][i];
 			}
-			(void)i2c_bus_bb_write7(BOARD_OLED_I2C_ADDR7, buf, sizeof(buf));
+			(void)i2c_bus_write_buf(BOARD_OLED_I2C_ADDR7, buf, sizeof(buf));
 		}
 	}
 }
