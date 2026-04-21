@@ -4,7 +4,9 @@
 #include "qmi8658_reg.h"
 #include "os/os_api.h"
 
-static int qmi8658_read_byte(uint8_t dev_addr, uint8_t reg_addr, uint8_t *data) {
+static QMI8658_Type_t g_device_type = QMI8658_TYPE_UNKNOWN;
+
+static int qmi8658_read_reg(uint8_t dev_addr, uint8_t reg_addr, uint8_t *data) {
   int ret = i2c_bus_read_reg8(dev_addr, reg_addr);
   if (ret < 0) {
     return ret;
@@ -13,96 +15,109 @@ static int qmi8658_read_byte(uint8_t dev_addr, uint8_t reg_addr, uint8_t *data) 
   return 0;
 }
 
-static int qmi8658_write_byte(uint8_t dev_addr, uint8_t reg_addr, uint8_t data) {
+static int qmi8658_write_reg(uint8_t dev_addr, uint8_t reg_addr, uint8_t data) {
   uint8_t buf[2] = {reg_addr, data};
   return i2c_bus_write_buf(dev_addr, buf, 2);
 }
 
-static int qmi8658_read_buf(uint8_t dev_addr, uint8_t reg_addr, uint8_t *buf, uint8_t len) {
+static int qmi8658_read_regs(uint8_t dev_addr, uint8_t reg_addr, uint8_t *buf, uint8_t len) {
   return i2c_bus_read_buf(dev_addr, reg_addr, buf, len);
 }
 
-static int QMI8658_WriteRegBits(uint8_t reg, uint8_t mask, uint8_t value) {
+static int qmi8658_write_reg_bits(uint8_t reg, uint8_t mask, uint8_t value) {
   uint8_t current;
-  int ret = qmi8658_read_byte(BOARD_IMU_I2C_ADDR7, reg, &current);
+  int ret = qmi8658_read_reg(BOARD_IMU_I2C_ADDR7, reg, &current);
   if (ret < 0) {
     return ret;
   }
   uint8_t new_val = (current & ~mask) | (value & mask);
-  return qmi8658_write_byte(BOARD_IMU_I2C_ADDR7, reg, new_val);
+  return qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, reg, new_val);
 }
 
-int QMI8658A_Init(void) {
+int  QMI8658_Init(void) {
   int ret;
   
   // 读取WHOAMI寄存器，确认设备连接
   uint8_t whoami;
-  ret = qmi8658_read_byte(BOARD_IMU_I2C_ADDR7, QMI8658_REG_WHO_AM_I, &whoami);
+  ret = qmi8658_read_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_WHO_AM_I, &whoami);
   if (ret < 0) {
     printf("[QMI8658] ERROR: read WHOAMI failed: %d\n", ret);
     return ret;
   }
-  QMI8658_DEBUG_PRINT("WHOAMI: 0X%02X\n", whoami);
+  printf("[QMI8658] WHOAMI: 0x%02X\n", whoami);
 
-  // 读取id
-  uint8_t id;
-  ret = qmi8658_read_byte(BOARD_IMU_I2C_ADDR7, QMI8658_REG_REVISION_ID, &id);
+  // 读取REVISION_ID寄存器（硬件版本号）
+  uint8_t revision_id;
+  ret = qmi8658_read_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_REVISION_ID, &revision_id);
   if (ret < 0) {
     printf("[QMI8658] ERROR: read REVISION_ID failed: %d\n", ret);
   } else {
-    QMI8658_DEBUG_PRINT("REVISION_ID: 0X%02X\n", id);
+    printf("[QMI8658] REVISION_ID: 0x%02X (Hardware version)\n", revision_id);
+  }
+
+  // 检测是否为QMI8658C（通过读取AttitudeEngine四元数寄存器）
+  // C系列支持姿态引擎，四元数寄存器(0x49-0x4A)会有有效数据
+  // A系列不支持，读取会返回0或无效值
+  uint8_t ae_buf[4];
+  ret = qmi8658_read_regs(BOARD_IMU_I2C_ADDR7, QMI8658_REG_DQW_L, ae_buf, 4);
+  if (ret == 0 && (ae_buf[0] != 0 || ae_buf[1] != 0 || ae_buf[2] != 0 || ae_buf[3] != 0)) {
+    g_device_type = QMI8658_TYPE_C;
+    printf("[QMI8658] Device: QMI8658C (AttitudeEngine detected)\n");
+  } else {
+    g_device_type = QMI8658_TYPE_A;
+    printf("[QMI8658] Device: QMI8658A\n");
   }
 
   // 使能地址自动递增
-  ret = qmi8658_write_byte(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL1, QMI8658_CTRL1_ADDR_AI_EN);
+  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL1, QMI8658_CTRL1_ADDR_AI_EN);
   if (ret < 0) {
     printf("[QMI8658] ERROR: write CTRL1 failed: %d\n", ret);
     return ret;
   }
 
   // 加速度设置 ±4G, 512Hz
-  ret = QMI8658_WriteRegBits(QMI8658_REG_CTRL2, QMI8658_CTRL2_ACC_RANGE_Msk, QMI8658_CTRL2_ACC_RANGE_4G);
+  ret = qmi8658_write_reg_bits(QMI8658_REG_CTRL2, QMI8658_CTRL2_ACC_RANGE_Msk, QMI8658_CTRL2_ACC_RANGE_4G);
   if (ret < 0) {
     printf("[QMI8658] ERROR: write CTRL2 ACC_RANGE failed: %d\n", ret);
     return ret;
   }
-  ret = QMI8658_WriteRegBits(QMI8658_REG_CTRL2, QMI8658_CTRL2_ACC_ODR_Msk, QMI8658_CTRL2_ACC_ODR_512HZ);
+  ret = qmi8658_write_reg_bits(QMI8658_REG_CTRL2, QMI8658_CTRL2_ACC_ODR_Msk, QMI8658_CTRL2_ACC_ODR_512HZ);
   if (ret < 0) {
     printf("[QMI8658] ERROR: write CTRL2 ACC_ODR failed: %d\n", ret);
     return ret;
   }
 
   // 陀螺仪设置 ±2000dps, 512Hz
-  ret = QMI8658_WriteRegBits(QMI8658_REG_CTRL3, QMI8658_CTRL3_GYR_RANGE_Msk, QMI8658_CTRL3_GYR_RANGE_2000DPS);
+  ret = qmi8658_write_reg_bits(QMI8658_REG_CTRL3, QMI8658_CTRL3_GYR_RANGE_Msk, QMI8658_CTRL3_GYR_RANGE_2000DPS);
   if (ret < 0) {
     printf("[QMI8658] ERROR: write CTRL3 GYR_RANGE failed: %d\n", ret);
     return ret;
   }
-  ret = QMI8658_WriteRegBits(QMI8658_REG_CTRL3, QMI8658_CTRL3_GYR_ODR_Msk, QMI8658_CTRL3_GYR_ODR_512HZ);
+  ret = qmi8658_write_reg_bits(QMI8658_REG_CTRL3, QMI8658_CTRL3_GYR_ODR_Msk, QMI8658_CTRL3_GYR_ODR_512HZ);
   if (ret < 0) {
     printf("[QMI8658] ERROR: write CTRL3 GYR_ODR failed: %d\n", ret);
     return ret;
   }
 
   // 滤波器配置（启动低通滤波）
-  ret = qmi8658_write_byte(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL5, 0x00);
+  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL5, 0x00);
   if (ret < 0) {
     printf("[QMI8658] ERROR: write CTRL5 failed: %d\n", ret);
     return ret;
   }
 
   // 使能传感器（加速度计 + 陀螺仪 + 温度）
-  ret = QMI8658_WriteRegBits(QMI8658_REG_CTRL7, QMI8658_CTRL7_ACC_EN_Msk, QMI8658_CTRL7_ACC_EN);
+  ret = qmi8658_write_reg_bits(QMI8658_REG_CTRL7, QMI8658_CTRL7_ACC_EN_Msk, QMI8658_CTRL7_ACC_EN);
   if (ret < 0) {
     printf("[QMI8658] ERROR: write CTRL7 ACC_EN failed: %d\n", ret);
     return ret;
   }
-  ret = QMI8658_WriteRegBits(QMI8658_REG_CTRL7, QMI8658_CTRL7_GYR_EN_Msk, QMI8658_CTRL7_GYR_EN);
+  ret = qmi8658_write_reg_bits(QMI8658_REG_CTRL7, QMI8658_CTRL7_GYR_EN_Msk, QMI8658_CTRL7_GYR_EN);
   if (ret < 0) {
     printf("[QMI8658] ERROR: write CTRL7 GYR_EN failed: %d\n", ret);
     return ret;
   }
-  ret = QMI8658_WriteRegBits(QMI8658_REG_CTRL7, QMI8658_CTRL7_TEMP_EN_Msk, QMI8658_CTRL7_TEMP_EN);
+  ret = qmi8658_write_reg_bits(QMI8658_REG_CTRL7, QMI8658_CTRL7_TEMP_EN_Msk, QMI8658_CTRL7_TEMP_EN);
   if (ret < 0) {
     printf("[QMI8658] ERROR: write CTRL7 TEMP_EN failed: %d\n", ret);
     return ret;
@@ -112,7 +127,11 @@ int QMI8658A_Init(void) {
   return 0;
 }
 
-int QMI8658A_ReadData(QMI8658A_Data_t *data) {
+QMI8658_Type_t QMI8658_GetDeviceType(void) {
+  return g_device_type;
+}
+
+int  QMI8658_ReadData(QMI8658_Data_t *data) {
   uint8_t buf[12];
   int ret;
 
@@ -120,7 +139,7 @@ int QMI8658A_ReadData(QMI8658A_Data_t *data) {
     return -1;
   }
 
-  ret = qmi8658_read_buf(BOARD_IMU_I2C_ADDR7, QMI8658_REG_AX_L, buf, 12);
+  ret = qmi8658_read_regs(BOARD_IMU_I2C_ADDR7, QMI8658_REG_AX_L, buf, 12);
   if (ret < 0) {
     printf("[QMI8658] ERROR: read data failed: %d\n", ret);
     return ret;
@@ -140,7 +159,7 @@ int QMI8658A_ReadData(QMI8658A_Data_t *data) {
   return 0;
 }
 
-int QMI8658A_ReadTemperature(float *temperature) {
+int  QMI8658_ReadTemperature(float *temperature) {
   uint8_t buf[2];
   int ret;
   int16_t raw_temp;
@@ -149,7 +168,7 @@ int QMI8658A_ReadTemperature(float *temperature) {
     return -1;
   }
 
-  ret = qmi8658_read_buf(BOARD_IMU_I2C_ADDR7, QMI8658_REG_TEMP_L, buf, 2);
+  ret = qmi8658_read_regs(BOARD_IMU_I2C_ADDR7, QMI8658_REG_TEMP_L, buf, 2);
   if (ret < 0) {
     printf("[QMI8658] ERROR: read temperature failed: %d\n", ret);
     return ret;
@@ -163,11 +182,11 @@ int QMI8658A_ReadTemperature(float *temperature) {
   return 0;
 }
 
-int QMI8658A_IsDataReady(void) {
+int  QMI8658_IsDataReady(void) {
   uint8_t status;
   int ret;
 
-  ret = qmi8658_read_byte(BOARD_IMU_I2C_ADDR7, QMI8658_REG_STATUSINT, &status);
+  ret = qmi8658_read_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_STATUSINT, &status);
   if (ret < 0) {
     return ret;
   }
@@ -175,9 +194,9 @@ int QMI8658A_IsDataReady(void) {
   return (status & (QMI8658_STATUSINT_DRDY_ACC_Msk | QMI8658_STATUSINT_DRDY_GYR_Msk)) != 0;
 }
 
-int QMI8658A_WaitForDataReady(int timeout_ms) {
+int  QMI8658_WaitForDataReady(int timeout_ms) {
   while (timeout_ms > 0) {
-    if (QMI8658A_IsDataReady() > 0) {
+    if (QMI8658_IsDataReady() > 0) {
       return 0;
     }
     os_time_dly(1);
@@ -186,7 +205,7 @@ int QMI8658A_WaitForDataReady(int timeout_ms) {
   return -2;
 }
 
-void QMI8658A_SoftReset(void) {
-  qmi8658_write_byte(BOARD_IMU_I2C_ADDR7, QMI8658_REG_RESET, QMI8658_SOFT_RESET_VAL);
+void QMI8658_SoftReset(void) {
+  qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_RESET, QMI8658_SOFT_RESET_VAL);
   os_time_dly(10);
 }

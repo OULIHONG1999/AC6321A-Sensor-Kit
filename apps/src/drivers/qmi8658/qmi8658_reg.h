@@ -8,6 +8,7 @@ extern "C" {
 /************************** 设备信息 **************************/
 #define QMI8658_WHO_AM_I_VAL        0x05    // 器件ID
 #define QMI8658A_REVISION_ID        0x7C    // QMI8658A版本ID
+#define QMI8658A_REVISION_ID_V2     0x7B    // QMI8658A版本ID (V2)
 #define QMI8658C_REVISION_ID        0x79    // QMI8658C版本ID
 
 /************************** 寄存器地址定义 **************************/

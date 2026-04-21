@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 // 调试开关
-// #define QMI8658_DEBUG
+#define QMI8658_DEBUG
 
 #ifdef QMI8658_DEBUG
   #define QMI8658_DEBUG_PRINT(fmt, ...) printf("[QMI8658] " fmt, ##__VA_ARGS__)
@@ -167,6 +167,13 @@
 #define QMI8658_CMD_RST_PEDO            0x0F
 #define QMI8658_CMD_CALIB               0xA2
 
+// 设备类型枚举
+typedef enum {
+    QMI8658_TYPE_UNKNOWN = 0,
+    QMI8658_TYPE_A = 0x7C,
+    QMI8658_TYPE_C = 0x79
+} QMI8658_Type_t;
+
 // 数据结构
 typedef struct {
     int16_t acc_x;
@@ -175,14 +182,16 @@ typedef struct {
     int16_t gyr_x;
     int16_t gyr_y;
     int16_t gyr_z;
-} QMI8658A_Data_t;
+} QMI8658_Data_t;
 
-int QMI8658A_Init(void);
-int QMI8658A_ReadData(QMI8658A_Data_t *data);
-int QMI8658A_ReadTemperature(float *temperature);
-int QMI8658A_IsDataReady(void);
-int QMI8658A_WaitForDataReady(int timeout_ms);
-void QMI8658A_SoftReset(void);
+// 函数声明
+int  QMI8658_Init(void);
+QMI8658_Type_t QMI8658_GetDeviceType(void);
+int  QMI8658_ReadData(QMI8658_Data_t *data);
+int  QMI8658_ReadTemperature(float *temperature);
+int  QMI8658_IsDataReady(void);
+int  QMI8658_WaitForDataReady(int timeout_ms);
+void QMI8658_SoftReset(void);
 
 
 #endif /* QMI8658A_H */
