@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 // 调试开关
-#define QMI8658_DEBUG
+// #define QMI8658_DEBUG
 
 #ifdef QMI8658_DEBUG
   #define QMI8658_DEBUG_PRINT(fmt, ...) printf("[QMI8658] " fmt, ##__VA_ARGS__)

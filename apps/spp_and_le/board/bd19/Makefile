@@ -209,8 +209,10 @@ INCLUDES := \
 	-I../../../../apps/common/device/usb \
 	-I../../../../apps/common/device/usb/device \
 	-I../../../../apps/common/device/usb/host \
+	-I../../../../apps/src/drivers \
+	-I../../../../apps/src/lib/u8g2/csrc \
+	-I../../../../apps/src/lib/u8g2/port \
 	-I$(SYS_INC_DIR) \
-	-I../../../../apps/src \
 
 
 # 需要编译的 .c 文件
@@ -436,12 +438,33 @@ c_SRC_FILES := \
 	../../../../cpu/bd19/spi_test.c \
 	../../../../cpu/bd19/tone_player.c \
 	../../../../cpu/bd19/uart_dev.c \
-	../../../../apps/src/hal/hal_gpio_jl.c \
 	../../../../apps/src/mw/mw_runtime.c \
-	../../../../apps/src/drivers/qmi8658/qmi8658_driver.c \
-	../../../../apps/src/app/app_sensor.c \
+	../../../../apps/src/drivers/i2c/i2c_bus.c \
 	../../../../apps/src/drivers/oled/oled.c \
-	../../../../apps/src/user_main.c \
+	../../../../apps/src/drivers/oled/oled_utils.c \
+	../../../../apps/src/drivers/qmi8658/qmi8658a.c \
+	../../../../apps/src/drivers/qmi8658/qmi8658_attitude.c \
+	../../../../apps/src/drivers/qmi8658/qmi8658_improved.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_buffer.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_box.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_circle.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_d_memory.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_d_setup.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_font.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_fonts.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_hvline.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_intersection.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_line.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_ll_hvline.c \
+	../../../../apps/src/lib/u8g2/csrc/u8g2_setup.c \
+	../../../../apps/src/lib/u8g2/csrc/u8x8_byte.c \
+	../../../../apps/src/lib/u8g2/csrc/u8x8_8x8.c \
+	../../../../apps/src/lib/u8g2/csrc/u8x8_cad.c \
+	../../../../apps/src/lib/u8g2/csrc/u8x8_d_ssd1306_128x64_noname.c \
+	../../../../apps/src/lib/u8g2/csrc/u8x8_display.c \
+	../../../../apps/src/lib/u8g2/csrc/u8x8_gpio.c \
+	../../../../apps/src/lib/u8g2/csrc/u8x8_setup.c \
+	../../../../apps/src/lib/u8g2/port/u8g2_port.c \
 
 
 # 需要编译的 .S 文件

@@ -318,13 +318,13 @@
 //                                  低功耗配置                                     //
 //*********************************************************************************//
 //#define TCFG_LOWPOWER_POWER_SEL				PWR_DCDC15
-#define TCFG_LOWPOWER_POWER_SEL				PWR_LDO15                    //电源模式设置，可选DCDC和LDO
+#define TCFG_LOWPOWER_POWER_SEL				PWR_DCDC15_FOR_CHARGE                    //电源模式设置，可选DCDC和LDO
 #define TCFG_LOWPOWER_BTOSC_DISABLE			0                            //低功耗模式下BTOSC是否保持
 #define TCFG_LOWPOWER_LOWPOWER_SEL			0//SLEEP_EN                     //SNIFF状态下芯片是否进入powerdown
 /*强VDDIO等级配置,可选：
     VDDIOM_VOL_20V    VDDIOM_VOL_22V    VDDIOM_VOL_24V    VDDIOM_VOL_26V
     VDDIOM_VOL_30V    VDDIOM_VOL_30V    VDDIOM_VOL_32V    VDDIOM_VOL_36V*/
-#define TCFG_LOWPOWER_VDDIOM_LEVEL			VDDIOM_VOL_30V
+#define TCFG_LOWPOWER_VDDIOM_LEVEL			VDDIOM_VOL_34V
 /*弱VDDIO等级配置，可选：
     VDDIOW_VOL_21V    VDDIOW_VOL_24V    VDDIOW_VOL_28V    VDDIOW_VOL_32V*/
 #define TCFG_LOWPOWER_VDDIOW_LEVEL			VDDIOW_VOL_28V               //弱VDDIO等级配置

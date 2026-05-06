@@ -101,12 +101,15 @@ int  QMI8658_Init(void) {
     return ret;
   }
 
-  // 滤波器配置（启动低通滤波）
-  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL5, 0x00);
+  // 滤波器配置（启用低通滤波，减少噪声）
+  // ACC_LPF=50Hz, GYR_LPF=50Hz
+  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL5, 
+                          QMI8658_CTRL5_ACC_LPF_50HZ | QMI8658_CTRL5_GYR_LPF_50HZ);
   if (ret < 0) {
     printf("[QMI8658] ERROR: write CTRL5 failed: %d\n", ret);
     return ret;
   }
+  printf("[QMI8658] LPF enabled: ACC=50Hz, GYR=50Hz\n");
 
   // 使能传感器（加速度计 + 陀螺仪 + 温度）
   ret = qmi8658_write_reg_bits(QMI8658_REG_CTRL7, QMI8658_CTRL7_ACC_EN_Msk, QMI8658_CTRL7_ACC_EN);
@@ -276,9 +279,12 @@ int QMI8658_CalibrateGyro(void) {
   int ret;
   int32_t gyr_x_sum = 0, gyr_y_sum = 0, gyr_z_sum = 0;
   QMI8658_Data_t data;
-  const int samples = 100;
+  const int samples = 200;  // 增加采样次数提高精度
 
-  QMI8658_DEBUG_PRINT("Gyro calibration started...\n");
+  QMI8658_DEBUG_PRINT("Gyro calibration started (%d samples)...\n", samples);
+  
+  // 等待传感器稳定
+  os_time_dly(100);
   
   for (int i = 0; i < samples; i++) {
     ret = QMI8658_ReadData(&data);
@@ -289,7 +295,7 @@ int QMI8658_CalibrateGyro(void) {
     gyr_x_sum += data.gyr_x;
     gyr_y_sum += data.gyr_y;
     gyr_z_sum += data.gyr_z;
-    os_time_dly(10);
+    os_time_dly(5);  // 缩短延迟，加快校准速度
   }
   
   g_calibration.gyr_offset_x = (int16_t)(gyr_x_sum / samples);
@@ -340,35 +346,52 @@ int QMI8658_CalibrateAccel(void) {
 
 int QMI8658_ApplyCalibration(void) {
   int ret;
-  uint8_t cal_data[8];
   
   if (!g_calibration.calibrated) {
     QMI8658_DEBUG_PRINT("No calibration data available\n");
     return -1;
   }
   
-  cal_data[0] = (uint8_t)(g_calibration.gyr_offset_x & 0xFF);
-  cal_data[1] = (uint8_t)((g_calibration.gyr_offset_x >> 8) & 0xFF);
-  cal_data[2] = (uint8_t)(g_calibration.gyr_offset_y & 0xFF);
-  cal_data[3] = (uint8_t)((g_calibration.gyr_offset_y >> 8) & 0xFF);
-  cal_data[4] = (uint8_t)(g_calibration.gyr_offset_z & 0xFF);
-  cal_data[5] = (uint8_t)((g_calibration.gyr_offset_z >> 8) & 0xFF);
-  cal_data[6] = (uint8_t)(g_calibration.acc_offset_x & 0xFF);
-  cal_data[7] = (uint8_t)((g_calibration.acc_offset_x >> 8) & 0xFF);
-  
-  ret = i2c_bus_write_buf(BOARD_IMU_I2C_ADDR7, (uint8_t[]){QMI8658_REG_CAL1_L}, 2);
+  // 使用芯片内置的校准命令（参考官方文档）
+  // 1. 关闭传感器
+  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL7, 0x00);
   if (ret < 0) {
-    QMI8658_DEBUG_PRINT("Write gyro offset command failed\n");
+    QMI8658_DEBUG_PRINT("Failed to disable sensors for calibration\n");
     return ret;
   }
   
-  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL9, QMI8658_CMD_GYR_OFFSET);
+  // 2. 写入校准命令 0xA2
+  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL9, QMI8658_CMD_COD_CALIB);
   if (ret < 0) {
-    QMI8658_DEBUG_PRINT("Write gyro offset command failed\n");
+    QMI8658_DEBUG_PRINT("Failed to write calibration command\n");
     return ret;
   }
   
-  QMI8658_DEBUG_PRINT("Calibration applied\n");
+  // 3. 等待校准完成（约 2 秒）
+  os_time_dly(200);
+  
+  // 4. 检查校准状态
+  uint8_t cal_status;
+  ret = qmi8658_read_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_COD_STATUS, &cal_status);
+  if (ret < 0) {
+    QMI8658_DEBUG_PRINT("Failed to read calibration status\n");
+    return ret;
+  }
+  
+  if (cal_status != 0x00) {
+    QMI8658_DEBUG_PRINT("Calibration failed with status: 0x%02X\n", cal_status);
+    return -1;
+  }
+  
+  // 5. 重新使能传感器
+  ret = qmi8658_write_reg(BOARD_IMU_I2C_ADDR7, QMI8658_REG_CTRL7, 
+                          QMI8658_CTRL7_ACC_EN | QMI8658_CTRL7_GYR_EN | QMI8658_CTRL7_TEMP_EN);
+  if (ret < 0) {
+    QMI8658_DEBUG_PRINT("Failed to re-enable sensors\n");
+    return ret;
+  }
+  
+  QMI8658_DEBUG_PRINT("Hardware calibration completed successfully\n");
   return 0;
 }
 

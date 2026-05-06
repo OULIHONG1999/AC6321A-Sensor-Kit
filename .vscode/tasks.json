@@ -4,10 +4,10 @@
         {
             "label": "AC63: \u5feb\u901f\u7f16\u8bd1\uff08\u7ec8\u7aef: python ... --build\uff09",
             "type": "shell",
-            "command": "cmd",
+            "command": "python",
             "args": [
-                "/c",
-                "chcp 65001>nul && python clangd_board_switcher.py --build"
+                "clangd_board_switcher.py",
+                "--build"
             ],
             "problemMatcher": [],
             "detail": "\u7ec8\u7aef\u6216\u6b64\u5904\u8fd0\u884c\u5747\u53ef\uff1b\u5e76\u884c make apps/spp_and_le/board/bd19",
@@ -15,17 +15,16 @@
                 "echo": true,
                 "reveal": "always",
                 "focus": true,
-                "panel": "shared",
-                "showReuseMessage": false
+                "panel": "shared"
             }
         },
         {
             "label": "AC63: \u6e05\u7406\u7f16\u8bd1\u8f93\u51fa\uff08\u7ec8\u7aef: python ... --clean\uff09",
             "type": "shell",
-            "command": "cmd",
+            "command": "python",
             "args": [
-                "/c",
-                "chcp 65001>nul && python clangd_board_switcher.py --clean"
+                "clangd_board_switcher.py",
+                "--clean"
             ],
             "problemMatcher": [],
             "detail": "\u7ec8\u7aef\u6216\u6b64\u5904\u8fd0\u884c\u5747\u53ef\uff1b\u5220\u9664 bd19 \u76f8\u5173\u4ea7\u7269",
@@ -33,17 +32,17 @@
                 "echo": true,
                 "reveal": "always",
                 "focus": true,
-                "panel": "shared",
-                "showReuseMessage": false
+                "panel": "shared"
             }
         },
         {
             "label": "Clangd: \u9009\u62e9\u677f\u5b50\u5e76\u751f\u6210 compile_commands",
             "type": "shell",
-            "command": "cmd",
+            "command": "python",
             "args": [
-                "/c",
-                "chcp 65001>nul && python clangd_board_switcher.py --by-name ${input:clangdBoardTarget}"
+                "clangd_board_switcher.py",
+                "--by-name",
+                "${input:clangdBoardTarget}"
             ],
             "problemMatcher": [],
             "detail": "\u83dc\u5355\uff1a\u7ec8\u7aef \u2192 \u8fd0\u884c\u4efb\u52a1\u2026 \u2192 \u70b9\u672c\u9879 \u2192 \u9876\u90e8\u5f39\u51fa\u5217\u8868\uff08\u65e0\u9700\u53c2\u6570\u3001\u4e0d\u5360\u7528 Ctrl+Shift+B\uff09",
@@ -51,17 +50,15 @@
                 "echo": true,
                 "reveal": "always",
                 "focus": true,
-                "panel": "shared",
-                "showReuseMessage": false
+                "panel": "shared"
             }
         },
         {
             "label": "Clangd: \u4ec5\u540c\u6b65 IDE \u914d\u7f6e\uff08\u65e0\u53c2\u6570\uff0c\u7b49\u540c python clangd_board_switcher.py\uff09",
             "type": "shell",
-            "command": "cmd",
+            "command": "python",
             "args": [
-                "/c",
-                "chcp 65001>nul && python clangd_board_switcher.py"
+                "clangd_board_switcher.py"
             ],
             "problemMatcher": [],
             "detail": "Makefile \u76ee\u6807\u53d8\u4e86\u65f6\u8dd1\u4e00\u6b21\uff1b\u4e0d\u5199 compile_commands",
@@ -69,8 +66,7 @@
                 "echo": true,
                 "reveal": "always",
                 "focus": true,
-                "panel": "shared",
-                "showReuseMessage": false
+                "panel": "shared"
             }
         }
     ],

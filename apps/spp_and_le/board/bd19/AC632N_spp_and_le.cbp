@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <CodeBlocks_project_file>
 <FileVersion major="1" minor="6" />
 <Project>
@@ -178,68 +178,68 @@
 </ExtraCommands>
 </Target>
 </Build>
-<Unit filename="../../../../apps/common/audio/audio_digital_vol.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/audio/audio_digital_vol.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/audio/audio_digital_vol.h" />
-<Unit filename="../../../../apps/common/bt_common/bt_test_api.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/cJSON/cJSON.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/bt_common/bt_test_api.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/cJSON/cJSON.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/cJSON/cJSON.h" />
-<Unit filename="../../../../apps/common/debug/debug.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/debug/debug.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/gSensor/fmy/Motion_api.h" />
-<Unit filename="../../../../apps/common/device/gSensor/fmy/SC7A20_E.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/gSensor/fmy/SC7A20_TR.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/gSensor/fmy/SC7A20_E.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/gSensor/fmy/SC7A20_TR.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/gSensor/fmy/SC7A20_TR.h" />
-<Unit filename="../../../../apps/common/device/gSensor/fmy/gSensor_manage.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/gSensor/fmy/gSensor_manage.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/gSensor/fmy/gSensor_manage.h" />
-<Unit filename="../../../../apps/common/device/gSensor/fmy/gsensor_api.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/gSensor/fmy/gsensor_api.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/gSensor/fmy/gsensor_api.h" />
-<Unit filename="../../../../apps/common/device/gSensor/fmy/msa310.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/gSensor/fmy/msa310.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/gSensor/fmy/msa310.h" />
-<Unit filename="../../../../apps/common/device/gSensor/fmy/msa310_function.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/gSensor/fmy/msa310_function.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/gSensor/fmy/msa310_function.h" />
-<Unit filename="../../../../apps/common/device/key/adkey.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/key/iokey.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/key/irkey.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/key/key_driver.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/key/touch_key.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/norflash/norflash.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/device/cdc.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/key/adkey.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/key/iokey.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/key/irkey.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/key/key_driver.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/key/touch_key.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/norflash/norflash.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/device/cdc.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/usb/device/cdc.h" />
 <Unit filename="../../../../apps/common/device/usb/device/cdc_defs.h" />
-<Unit filename="../../../../apps/common/device/usb/device/custom_hid.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/device/descriptor.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/device/hid.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/device/msd.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/device/msd_upgrade.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/device/task_pc.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/device/uac1.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/device/uac_stream.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/device/usb_device.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/device/user_setup.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/host/adb.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/usb/device/custom_hid.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/device/descriptor.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/device/hid.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/device/msd.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/device/msd_upgrade.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/device/task_pc.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/device/uac1.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/device/uac_stream.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/device/usb_device.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/device/user_setup.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/host/adb.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/usb/host/adb.h" />
-<Unit filename="../../../../apps/common/device/usb/host/aoa.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/usb/host/aoa.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/usb/host/aoa.h" />
-<Unit filename="../../../../apps/common/device/usb/host/audio.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/host/audio_demo.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/host/hid.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/host/usb_bulk_transfer.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/usb/host/audio.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/host/audio_demo.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/host/hid.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/host/usb_bulk_transfer.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/usb/host/usb_bulk_transfer.h" />
-<Unit filename="../../../../apps/common/device/usb/host/usb_ctrl_transfer.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/usb/host/usb_ctrl_transfer.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/usb/host/usb_ctrl_transfer.h" />
 <Unit filename="../../../../apps/common/device/usb/host/usb_hid_keys.h" />
-<Unit filename="../../../../apps/common/device/usb/host/usb_host.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/device/usb/host/usb_storage.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/usb/host/usb_host.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/device/usb/host/usb_storage.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/usb/host/usb_storage.h" />
 <Unit filename="../../../../apps/common/device/usb/usb_common_def.h" />
-<Unit filename="../../../../apps/common/device/usb/usb_config.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/usb/usb_config.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/usb/usb_config.h" />
-<Unit filename="../../../../apps/common/device/usb/usb_host_config.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/device/usb/usb_host_config.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/device/usb/usb_std_class_def.h" />
 <Unit filename="../../../../apps/common/include/bt_common.h" />
 <Unit filename="../../../../apps/common/include/norflash.h" />
 <Unit filename="../../../../apps/common/include/standard_hid.h" />
 <Unit filename="../../../../apps/common/include/update_tws.h" />
-<Unit filename="../../../../apps/common/temp_trim/dtemp_pll_trim.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/temp_trim/dtemp_pll_trim.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/include/ble_qiot_common.h" />
 <Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/include/ble_qiot_config.h" />
 <Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/include/ble_qiot_crc.h" />
@@ -257,98 +257,98 @@
 <Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/include/ble_qiot_sha1.h" />
 <Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/include/ble_qiot_template.h" />
 <Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/include/ble_qiot_utils_base64.h" />
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_ll_demo/ll_task.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_ll_demo/ll_task.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_ll_demo/ll_task.h" />
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_import.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_llsync_data.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_llsync_device.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_llsync_event.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_llsync_ota.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_service.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_template.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_base64.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_crc.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_hmac.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_log.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_md5.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_sha1.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_import.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_llsync_data.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_llsync_device.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_llsync_event.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_llsync_ota.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_service.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_template.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_base64.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_crc.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_hmac.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_log.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_md5.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/Tecent_LL/tecent_protocol/ble_qiot_utils_sha1.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/common/3th_profile_api.h" />
-<Unit filename="../../../../apps/common/third_party_profile/common/custom_cfg.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/common/custom_cfg.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/common/custom_cfg.h" />
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/hilink_ota.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/hilink_ota.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/hilink_ota.h" />
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/hilink_protocol.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/hilink_protocol.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/hilink_protocol.h" />
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/hilink_task.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/hilink_task.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/hilink_task.h" />
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/aes.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/arc4.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/bignum.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/blowfish.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/ccm.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/chacha20.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/chachapoly.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/cipher.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/cipher_wrap.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/des.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/gcm.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/aes.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/arc4.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/bignum.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/blowfish.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/ccm.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/chacha20.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/chachapoly.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/cipher.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/cipher_wrap.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/des.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/gcm.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/mbedtls/cipher.h" />
 <Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/mbedtls/common.h" />
 <Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/mbedtls/config.h" />
 <Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/mbedtls/gcm.h" />
 <Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/mbedtls/md.h" />
 <Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/mbedtls/platform_util.h" />
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/mbedtls_main.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/md.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/md5.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/pkcs5.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/poly1305.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/ripemd160.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/sha1.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/sha256.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/sha512.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/bt_trans_data/rcsp_hid_inter.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/mbedtls_main.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/md.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/md5.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/pkcs5.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/poly1305.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/ripemd160.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/sha1.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/sha256.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/hilink_protocol/mbedtls_protocol/sha512.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/bt_trans_data/rcsp_hid_inter.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/bt_trans_data/rcsp_hid_inter.h" />
-<Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/rcsp_bluetooth.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/rcsp_bluetooth.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/rcsp_bluetooth.h" />
 <Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/rcsp_msg.h" />
-<Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/rcsp_updata/rcsp_ch_loader_download.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/rcsp_updata/rcsp_user_update.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/rcsp_updata/rcsp_ch_loader_download.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/rcsp_updata/rcsp_user_update.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/jieli/JL_rcsp/rcsp_updata/rcsp_user_update.h" />
-<Unit filename="../../../../apps/common/third_party_profile/jieli/gatt_common/le_gatt_client.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/jieli/gatt_common/le_gatt_common.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/jieli/gatt_common/le_gatt_client.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/jieli/gatt_common/le_gatt_common.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/jieli/gatt_common/le_gatt_common.h" />
-<Unit filename="../../../../apps/common/third_party_profile/jieli/gatt_common/le_gatt_server.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/jieli/gatt_common/le_gatt_server.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/jieli/le_client_demo.h" />
 <Unit filename="../../../../apps/common/third_party_profile/jieli/le_common.h" />
-<Unit filename="../../../../apps/common/third_party_profile/jieli/online_db/online_db_deal.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/jieli/online_db/online_db_deal.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/jieli/online_db/online_db_deal.h" />
-<Unit filename="../../../../apps/common/third_party_profile/jieli/online_db/spp_online_db.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/jieli/online_db/spp_online_db.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/jieli/online_db/spp_online_db.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/demo/tuya_ble_app_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/demo/tuya_ble_app_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/demo/tuya_ble_app_demo.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/demo/tuya_ota.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/demo/tuya_ota.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/demo/tuya_ota.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/product_test/tuya_ble_app_production_test.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/product_test/tuya_ble_app_production_test.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/product_test/tuya_ble_app_production_test.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/uart_common/tuya_ble_app_uart_common_handler.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/uart_common/tuya_ble_app_uart_common_handler.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/app/uart_common/tuya_ble_app_uart_common_handler.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/aes.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/aes.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/aes.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/ccm.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/ccm.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/ccm.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/hmac.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/hmac.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/hmac.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/md5.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/md5.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/md5.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/sha1.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/sha1.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/sha1.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/sha256.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/sha256.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/extern_components/mbedtls/sha256.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/port/tuya_ble_port.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/port/tuya_ble_port.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/port/tuya_ble_port.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/port/tuya_ble_port_JL.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/port/tuya_ble_port_peripheral.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/port/tuya_ble_port_JL.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/port/tuya_ble_port_peripheral.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/port/tuya_ble_port_peripheral.h" />
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/port/tuya_ble_stdlib.h" />
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/include/tuya_ble_api.h" />
@@ -371,143 +371,143 @@
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/include/tuya_ble_utils.h" />
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/lib/tuya_ble_event_handler.h" />
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/lib/tuya_ble_secure.h" />
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_api.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_bulk_data.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_data_handler.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_event.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_event_handler.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_event_handler_weak.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_feature_weather.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_gatt_send_queue.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_heap.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_main.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_mem.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_mutli_tsf_protocol.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_queue.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_storage.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_unix_time.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_utils.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_api.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_bulk_data.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_data_handler.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_event.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_event_handler.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_event_handler_weak.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_feature_weather.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_gatt_send_queue.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_heap.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_main.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_mem.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_mutli_tsf_protocol.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_queue.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_storage.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_unix_time.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/sdk/src/tuya_ble_utils.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/tuya_ble_config.h" />
 <Unit filename="../../../../apps/common/third_party_profile/tuya_protocol/tuya_ble_sdk_version.h" />
-<Unit filename="../../../../apps/common/update/testbox_update.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/update/uart_update.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/update/uart_update_master.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/common/update/update.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/app_main.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6321a_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/common/update/testbox_update.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/update/uart_update.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/update/uart_update_master.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/common/update/update.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/app_main.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6321a_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6321a_demo_cfg.h" />
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6321a_demo_global_build_cfg.h" />
-<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6323a_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6323a_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6323a_demo_cfg.h" />
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6323a_demo_global_build_cfg.h" />
-<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6323a_fmy.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6323a_fmy.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6323a_fmy_cfg.h" />
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6323a_fmy_global_build_cfg.h" />
-<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6328a_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6328a_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6328a_demo_cfg.h" />
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6328a_demo_global_build_cfg.h" />
-<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6328b_dongle.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6328b_dongle.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6328b_dongle_cfg.h" />
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6328b_dongle_global_build_cfg.h" />
-<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329b_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329b_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329b_demo_cfg.h" />
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329b_demo_global_build_cfg.h" />
-<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329c_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329c_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329c_demo_cfg.h" />
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329c_demo_global_build_cfg.h" />
-<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329e_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329e_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329e_demo_cfg.h" />
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329e_demo_global_build_cfg.h" />
-<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329f_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329f_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329f_demo_cfg.h" />
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac6329f_demo_global_build_cfg.h" />
-<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac632n_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac632n_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac632n_demo_cfg.h" />
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_ac632n_demo_global_build_cfg.h" />
 <Unit filename="../../../../apps/spp_and_le/board/bd19/board_config.h" />
-<Unit filename="../../../../apps/spp_and_le/config/lib_btctrler_config.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/config/lib_btstack_config.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/config/lib_driver_config.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/config/lib_media_config.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/config/lib_profile_config.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/config/lib_system_config.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/config/lib_update_config.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/config/log_config.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/at_char_com/app_at_char_com.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/at_char_com/at_char_cmds.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/at_char_com/at_char_uart.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/at_char_com/ble_at_char_client.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/config/lib_btctrler_config.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/config/lib_btstack_config.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/config/lib_driver_config.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/config/lib_media_config.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/config/lib_profile_config.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/config/lib_system_config.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/config/lib_update_config.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/config/log_config.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/at_char_com/app_at_char_com.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/at_char_com/at_char_cmds.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/at_char_com/at_char_uart.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/at_char_com/ble_at_char_client.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/at_char_com/ble_at_char_client.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/at_char_com/ble_at_char_com.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/at_char_com/ble_at_char_com.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/at_char_com/ble_at_char_com.h" />
 <Unit filename="../../../../apps/spp_and_le/examples/at_char_com/ble_at_char_profile.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/at_com/app_at_com.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/at_com/at_cmds.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/at_com/at_uart.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/at_com/ble_at_client.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/at_com/app_at_com.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/at_com/at_cmds.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/at_com/at_uart.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/at_com/ble_at_client.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/at_com/ble_at_client.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/at_com/ble_at_com.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/at_com/ble_at_com.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/at_com/ble_at_com.h" />
 <Unit filename="../../../../apps/spp_and_le/examples/at_com/ble_at_profile.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/at_com/spp_at_trans.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/at_com/spp_at_trans.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/at_com/spp_at_trans.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/ble_beacon/app_beacon.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/ble_beacon/ble_beacon.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/ble_beacon/app_beacon.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/ble_beacon/ble_beacon.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/ble_beacon/ble_beacon.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/ble_central/app_central.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/ble_central/ble_central.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/ble_central/app_central.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/ble_central/ble_central.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/ble_central/ble_central.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/ble_central/ble_central_server.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/ble_central/ble_central_server.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/ble_central/ble_central_server.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/conn_24g/app_conn_24g.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/conn_24g/ble_24g_client.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/conn_24g/app_conn_24g.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/conn_24g/ble_24g_client.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/conn_24g/ble_24g_profile.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/conn_24g/ble_24g_server.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/dongle/app_dongle.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/dongle/ble_dg_central.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/dongle/edr_hid_user.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/conn_24g/ble_24g_server.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/dongle/app_dongle.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/dongle/ble_dg_central.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/dongle/edr_hid_user.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/dongle/edr_hid_user.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/dongle/ota_dg_central.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/dongle/usb_hid_devices.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/dongle/usb_second_hid_devices.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/findmy/app_fmy.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/dongle/ota_dg_central.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/dongle/usb_hid_devices.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/dongle/usb_second_hid_devices.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/findmy/app_fmy.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy.h" />
 <Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy_cfg.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy_fmna.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy_fmna.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy_fmna.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy_ota.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy_ota.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy_ota.h" />
 <Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy_profile.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy_sensor_uart.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy_sensor_uart.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/findmy/ble_fmy_sensor_uart.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/ftms/app_ftms.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/ftms/ble_ftms.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/ftms/app_ftms.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/ftms/ble_ftms.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/ftms/ble_ftms_profile.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/hilink/app_hilink.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/hilink/hilink_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/hilink/app_hilink.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/hilink/hilink_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/hilink/hilink_demo.h" />
 <Unit filename="../../../../apps/spp_and_le/examples/hilink/hilink_profile.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/idle/app_idle.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/ll_sync/app_ll_sync.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/ll_sync/ll_sync_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/idle/app_idle.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/ll_sync/app_ll_sync.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/ll_sync/ll_sync_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/ll_sync/ll_sync_profile.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/multi_conn/app_multi_conn.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/multi_conn/ble_multi.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/multi_conn/app_multi_conn.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/multi_conn/ble_multi.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/multi_conn/ble_multi.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/multi_conn/ble_multi_central.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/multi_conn/ble_multi_peripheral.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/multi_conn/ble_multi_central.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/multi_conn/ble_multi_peripheral.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/multi_conn/ble_multi_profile.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/nonconn_24g/app_nonconn_24g.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/nonconn_24g/ble_24g_deal.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/trans_data/app_spp_and_le.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/trans_data/ble_trans.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/nonconn_24g/app_nonconn_24g.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/nonconn_24g/ble_24g_deal.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/trans_data/app_spp_and_le.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/trans_data/ble_trans.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/trans_data/ble_trans.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/trans_data/ble_trans_ios_services.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/trans_data/ble_trans_ios_services.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/trans_data/ble_trans_profile.h" />
-<Unit filename="../../../../apps/spp_and_le/examples/trans_data/ble_trans_search.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/tuya/app_tuya.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/examples/tuya/tuya_demo.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/trans_data/ble_trans_search.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/tuya/app_tuya.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/examples/tuya/tuya_demo.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../apps/spp_and_le/examples/tuya/tuya_demo.h" />
 <Unit filename="../../../../apps/spp_and_le/examples/tuya/tuya_profile.h" />
 <Unit filename="../../../../apps/spp_and_le/include/aec_user.h" />
@@ -528,46 +528,46 @@
 <Unit filename="../../../../apps/spp_and_le/include/spp_trans.h" />
 <Unit filename="../../../../apps/spp_and_le/include/tone_player.h" />
 <Unit filename="../../../../apps/spp_and_le/include/user_cfg_id.h" />
-<Unit filename="../../../../apps/spp_and_le/modules/bt/app_comm_ble.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/modules/bt/app_comm_edr.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/modules/bt/edr_emitter.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/modules/bt/spp_trans.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/modules/misc.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/modules/power/app_charge.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/modules/power/app_chargestore.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/modules/power/app_handshake.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/modules/power/app_power_manage.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/modules/rtc_alarm.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/modules/user_cfg.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../apps/spp_and_le/version.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../apps/spp_and_le/modules/bt/app_comm_ble.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/modules/bt/app_comm_edr.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/modules/bt/edr_emitter.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/modules/bt/spp_trans.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/modules/misc.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/modules/power/app_charge.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/modules/power/app_chargestore.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/modules/power/app_handshake.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/modules/power/app_power_manage.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/modules/rtc_alarm.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/modules/user_cfg.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../apps/spp_and_le/version.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../cpu/bd19/Resample_api.h" />
-<Unit filename="../../../../cpu/bd19/adc_api.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/audio_codec_clock.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../cpu/bd19/adc_api.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/audio_codec_clock.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../cpu/bd19/audio_codec_clock.h" />
 <Unit filename="../../../../cpu/bd19/audio_config.h" />
-<Unit filename="../../../../cpu/bd19/audio_decode/audio_decode.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../cpu/bd19/audio_decode/audio_decode.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../cpu/bd19/audio_decode/audio_decode.h" />
-<Unit filename="../../../../cpu/bd19/audio_encode/audio_encode.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../cpu/bd19/audio_encode/audio_encode.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../cpu/bd19/audio_encode/audio_encode.h" />
-<Unit filename="../../../../cpu/bd19/audio_pwm.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/audio_resample_demo.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/charge.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/chargestore.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/handshake_timer.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/iic_hw.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/iic_soft.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/irflt.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/ledc.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/ledc_test.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/mcpwm.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/plcnt.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/pwm_led.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/setup.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/spi.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/spi_test.c"><Option compilerVer="CC"/></Unit>
-<Unit filename="../../../../cpu/bd19/tone_player.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../cpu/bd19/audio_pwm.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/audio_resample_demo.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/charge.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/chargestore.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/handshake_timer.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/iic_hw.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/iic_soft.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/irflt.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/ledc.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/ledc_test.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/mcpwm.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/plcnt.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/pwm_led.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/setup.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/spi.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/spi_test.c"><Option compilerVer="CC" /></Unit>
+<Unit filename="../../../../cpu/bd19/tone_player.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../cpu/bd19/tone_player_api.h" />
-<Unit filename="../../../../cpu/bd19/uart_dev.c"><Option compilerVer="CC"/></Unit>
+<Unit filename="../../../../cpu/bd19/uart_dev.c"><Option compilerVer="CC" /></Unit>
 <Unit filename="../../../../include_lib/btctrler/ble/hci_ll.h" />
 <Unit filename="../../../../include_lib/btctrler/ble/ll_config.h" />
 <Unit filename="../../../../include_lib/btctrler/btcontroller_mode.h" />
