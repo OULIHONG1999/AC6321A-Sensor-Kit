@@ -57,3 +57,55 @@ cscope.out
 *.bc
 *.ufw
 tools/ac63-statusbar-ext
+
+# Build output directories
+build/
+dist/
+out/
+bin/
+obj/
+
+# IDE specific files
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+__pycache__/
+*.pyc
+
+# Generated files
+compile_commands.json
+*.layout
+
+# Binary firmware files
+cpu/*/tools/*.bin
+cpu/*/tools/*.fw
+cpu/*/tools/download/data_trans/*.bin
+cpu/*/tools/download/data_trans/*.fw
+cpu/*/tools/sdk.elf.objs.txt
+cpu/*/tools/sdk.elf.resolution.txt
+cpu/*/tools/sdk.lst
+
+# Additional binary and generated files to ignore
+*.cbp
+*.depend
+*.idx
+
+# Documentation PDFs (optional - uncomment if you don't want to track large PDFs)
+# doc/*.PDF
+# doc/*.pdf
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
