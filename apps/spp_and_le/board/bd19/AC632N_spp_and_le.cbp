@@ -890,6 +890,7 @@
 		</Unit>
 		<Unit filename="../../../src/app/app_sensor.h" />
 		<Unit filename="../../../src/board/board_pins.h" />
+		<Unit filename="../../../src/board/example_config.h" />
 		<Unit filename="../../../src/drivers/i2c/i2c_bus.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -916,6 +917,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../../src/drivers/qmi8658/qmi8658a.h" />
+		<Unit filename="../../../src/examples/example_qmi8658/qmi8658_example.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../../src/examples/example_qmi8658/qmi8658_example.h" />
+		<Unit filename="../../../src/examples/example_u8g2_dashboard/u8g2_dashboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../../src/examples/example_u8g2_dashboard/u8g2_dashboard.h" />
 		<Unit filename="../../../src/hal/hal_gpio.h" />
 		<Unit filename="../../../src/hal/hal_gpio_jl.c">
 			<Option compilerVar="CC" />

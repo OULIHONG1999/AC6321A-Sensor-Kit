@@ -17468,7 +17468,7 @@
 
 1776588115 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\app\app_sensor.h
 
-1776600900 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\mw\mw_runtime.h
+1778397560 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\mw\mw_runtime.h
 
 1776782246 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\drivers\i2c\i2c_bus.c
 	"i2c_bus.h"
@@ -18568,7 +18568,7 @@
 	"custom_cfg.h"
 	"le_gatt_common.h"
 
-1776594044 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\spp_and_le\examples\trans_data\app_spp_and_le.c
+1778397983 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\spp_and_le\examples\trans_data\app_spp_and_le.c
 	"app_action.h"
 	"app_charge.h"
 	"app_chargestore.h"
@@ -19120,24 +19120,11 @@
 	"../../../drivers/i2c/i2c_bus.h"
 	"../csrc/u8g2.h"
 
-1778082299 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\mw\mw_runtime.c
+1778397560 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\mw\mw_runtime.c
 	"mw_runtime.h"
-	"../drivers/power_en/power_en.h"
-	"../drivers/i2c/i2c_bus.h"
-	"../drivers/oled/bmp.h"
-	"../drivers/oled/oled.h"
-	"../drivers/oled/oled_utils.h"
-	"../drivers/qmi8658/qmi8658_reg.h"
-	"../drivers/qmi8658/qmi8658a.h"
-	"../drivers/qmi8658/qmi8658_improved.h"
-	"../lib/u8g2/csrc/u8g2.h"
-	"../lib/u8g2/port/u8g2_port.h"
-	"os/os_api.h"
-	"timer.h"
-	"typedef.h"
-	<math.h>
-	<string.h>
-	"../drivers/qmi8658/qmi8658_attitude.h"
+	"../board/example_config.h"
+	"../examples/example_qmi8658/qmi8658_example.h"
+	"../examples/example_u8g2_dashboard/u8g2_dashboard.h"
 
 1776602911 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\drivers\oled\bmp.h
 
@@ -19174,4 +19161,36 @@
 	"../../board/board_pins.h"
 	<math.h>
 	<string.h>
+
+1778397559 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\board\example_config.h
+
+1778397559 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658\qmi8658_example.h
+
+1778397559 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_u8g2_dashboard\u8g2_dashboard.h
+
+1778398327 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_u8g2_dashboard\u8g2_dashboard.c
+	"../../board/example_config.h"
+	"u8g2_dashboard.h"
+	"../../drivers/power_en/power_en.h"
+	"../../drivers/i2c/i2c_bus.h"
+	"../../lib/u8g2/csrc/u8g2.h"
+	"../../lib/u8g2/port/u8g2_port.h"
+	"os/os_api.h"
+	"system/event.h"
+	"typedef.h"
+	<math.h>
+	<stdio.h>
+
+1778399407 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658\qmi8658_example.c
+	"../../board/example_config.h"
+	"../../lib/u8g2/port/u8g2_port.h"
+	"qmi8658_example.h"
+	"../../drivers/power_en/power_en.h"
+	"../../drivers/i2c/i2c_bus.h"
+	"../../drivers/oled/oled.h"
+	"../../drivers/oled/oled_utils.h"
+	"../../drivers/qmi8658/qmi8658a.h"
+	"os/os_api.h"
+	"system/event.h"
+	"typedef.h"
 
