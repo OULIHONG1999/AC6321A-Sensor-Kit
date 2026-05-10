@@ -11,6 +11,8 @@
     #include "../examples/example_qmi8658/qmi8658_example.h"
 #elif ENABLE_EXAMPLE_U8G2_DASHBOARD
     #include "../examples/example_u8g2_dashboard/u8g2_dashboard.h"
+#elif ENABLE_EXAMPLE_GYRO_BALL
+    #include "../examples/example_gyro_ball/gyro_ball_example.h"
 #endif
 
 /**
@@ -22,6 +24,9 @@ void mw_runtime_init(void) {
     
 #elif ENABLE_EXAMPLE_U8G2_DASHBOARD
     u8g2_dashboard_start();
+    
+#elif ENABLE_EXAMPLE_GYRO_BALL
+    gyro_ball_example_start();
     
 #else
     #error "未启用任何示例！请检查 board/example_config.h"

@@ -122,13 +122,11 @@ void app_main_init(void)
 
 ### 按键事件处理
 
-在 `app_spp_and_le.c` 的按键事件处理中：
+在 `app_spp_and_le.c` 的按键事件处理中会自动调用 `example_key_handler()`：
 
 ```c
-extern void gyro_ball_key_handler(u8 key_value, u8 event_type);
-
-// 在按键事件回调中调用
-gyro_ball_key_handler(key_value, event_type);
+// SDK会自动调用 example_key_handler(key_value, event_type)
+// 无需手动注册或调用
 ```
 
 ##  显示效果

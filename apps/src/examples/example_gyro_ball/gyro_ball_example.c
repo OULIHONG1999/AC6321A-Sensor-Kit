@@ -23,9 +23,87 @@
 static u8g2_t u8g2;
 
 #include "gyro_ball_example.h"
+#include "../../drivers/power_en/power_en.h"
+#include "../../drivers/i2c/i2c_bus.h"
 #include "../../drivers/qmi8658/qmi8658a.h"
 #include "os/os_api.h"
 #include "typedef.h"
+#include "system/event.h"
+
+// ============================================================================
+// 宏定义
+// ============================================================================
+
+// 屏幕尺寸
+#define SCREEN_WIDTH        128
+#define SCREEN_HEIGHT       64
+#define SCREEN_CENTER_X     (SCREEN_WIDTH / 2)
+#define SCREEN_CENTER_Y     (SCREEN_HEIGHT / 2)
+
+// 游戏区域边界
+#define PLAY_AREA_X_MIN     0
+#define PLAY_AREA_X_MAX     (SCREEN_WIDTH - 1)
+#define PLAY_AREA_Y_MIN     17   // 标题栏下方
+#define PLAY_AREA_Y_MAX     55   // 参数栏上方
+
+// 小球参数范围
+#define SENSITIVITY_MIN     1.0f
+#define SENSITIVITY_MAX     50.0f
+#define SENSITIVITY_DEFAULT 10.0f
+#define SENSITIVITY_STEP    1.0f
+
+#define DAMPING_MIN         0.1f
+#define DAMPING_MAX         2.0f
+#define DAMPING_DEFAULT     0.5f
+#define DAMPING_STEP        0.1f
+
+#define BALL_RADIUS_MIN     2
+#define BALL_RADIUS_MAX     8
+#define BALL_RADIUS_DEFAULT 4
+#define BALL_RADIUS_STEP    1
+
+// 轨迹配置
+#define MAX_TRAIL_POINTS    50
+#define TRAIL_UPDATE_INTERVAL 100  // ms
+
+// 按键值定义（对应KEY_1~KEY_4）
+#define KEY_1               0
+#define KEY_2               1
+#define KEY_3               2
+#define KEY_4               3
+
+// ============================================================================
+// 数据结构定义
+// ============================================================================
+
+/**
+ * @brief 小球参数结构
+ */
+typedef struct {
+    float sensitivity;      // 灵敏度
+    float damping;          // 阻尼系数
+    uint8_t radius;         // 小球半径
+    uint8_t show_trail;     // 是否显示轨迹
+} ball_params_t;
+
+/**
+ * @brief 小球状态结构
+ */
+typedef struct {
+    float x;                // X坐标
+    float y;                // Y坐标
+    float vx;               // X速度
+    float vy;               // Y速度
+} ball_state_t;
+
+/**
+ * @brief 轨迹点结构
+ */
+typedef struct {
+    float x;                // X坐标
+    float y;                // Y坐标
+    uint8_t alpha;          // 透明度 (0-255)
+} trail_point_t;
 
 // ============================================================================
 // 全局变量定义
@@ -162,7 +240,7 @@ static void draw_title_bar(u8g2_t *u8g2)
     // 轨迹状态指示器
     if (g_ball_params.show_trail) {
         u8g2_SetDrawColor(u8g2, 1);
-        u8g2_DrawDisc(u8g2, 110, 9, 3);  // 实心圆表示开启
+        u8g2_DrawDisc(u8g2, 110, 9, 3, U8G2_DRAW_ALL);  // 实心圆表示开启
     } else {
         u8g2_SetDrawColor(u8g2, 1);
         u8g2_DrawCircle(u8g2, 110, 9, 3, U8G2_DRAW_ALL);  // 空心圆表示关闭
@@ -277,85 +355,17 @@ static void draw_params_bar(u8g2_t *u8g2)
 }
 
 // ============================================================================
-// 主循环
+// 按键事件处理（必须实现）
 // ============================================================================
 
 /**
- * @brief 示例主循环
+ * @brief 按键事件处理函数（由 app_spp_and_le.c 调用）
+ * @param key_value 按键值（0=KEY1, 1=KEY2, 2=KEY3, 3=KEY4）
+ * @param event_type 事件类型（KEY_EVENT_CLICK短按, KEY_EVENT_DOUBLE_CLICK双击, KEY_EVENT_LONG长按）
+ * 
+ * @note 此函数必须是全局函数（不能是static），因为会被外部调用
  */
-static void gyro_ball_task(void)
-{
-    u8g2_t *u8g2 = u8g2_get_instance();
-    qmi8658_data_t sensor_data;
-    uint32_t current_time;
-    
-    // 初始化小球位置
-    g_ball_state.x = SCREEN_CENTER_X;
-    g_ball_state.y = SCREEN_CENTER_Y;
-    g_ball_state.vx = 0;
-    g_ball_state.vy = 0;
-    g_trail_count = 0;
-    
-    printf("Gyro Ball Example Started\n");
-    
-    while (1) {
-        current_time = os_time_get();
-        
-        // 读取陀螺仪数据
-        if (qmi8658_read_data(&sensor_data) == 0) {
-            // 更新速度（使用角速度）
-            g_ball_state.vx += sensor_data.gyro.x * g_ball_params.sensitivity;
-            g_ball_state.vy += sensor_data.gyro.y * g_ball_params.sensitivity;
-            
-            // 应用阻尼
-            g_ball_state.vx *= (1.0f - g_ball_params.damping * 0.01f);
-            g_ball_state.vy *= (1.0f - g_ball_params.damping * 0.01f);
-            
-            // 更新位置
-            g_ball_state.x += g_ball_state.vx;
-            g_ball_state.y += g_ball_state.vy;
-            
-            // 边界碰撞检测
-            handle_boundary_collision(&g_ball_state.x, &g_ball_state.vx,
-                                      PLAY_AREA_X_MIN, PLAY_AREA_X_MAX,
-                                      g_ball_params.radius);
-            handle_boundary_collision(&g_ball_state.y, &g_ball_state.vy,
-                                      PLAY_AREA_Y_MIN, PLAY_AREA_Y_MAX,
-                                      g_ball_params.radius);
-        }
-        
-        // 更新轨迹（每100ms）
-        if (current_time - last_trail_update_time >= TRAIL_UPDATE_INTERVAL) {
-            update_trail();
-            last_trail_update_time = current_time;
-        }
-        
-        // 渲染显示
-        u8g2_ClearBuffer(u8g2);
-        
-        draw_title_bar(u8g2);
-        draw_play_area(u8g2);
-        draw_trail(u8g2);
-        draw_ball(u8g2);
-        draw_params_bar(u8g2);
-        
-        u8g2_SendBuffer(u8g2);
-        
-        // 控制刷新率 ~20 FPS
-        os_time_dly(50);
-    }
-}
-
-// ============================================================================
-// 公共接口
-// ============================================================================
-
-void gyro_ball_example_start(void)
-{
-    os_task_create(gyro_ball_task, 0, 512, 10, "gyro_ball");
-}
-
-void gyro_ball_key_handler(u8 key_value, u8 event_type)
+void example_key_handler(u8 key_value, u8 event_type)
 {
     switch (key_value) {
     case KEY_1:
@@ -421,6 +431,123 @@ void gyro_ball_key_handler(u8 key_value, u8 event_type)
     default:
         break;
     }
+}
+
+// ============================================================================
+// 主循环
+// ============================================================================
+
+/**
+ * @brief 示例主任务
+ * @param p_arg 任务参数（通常为NULL）
+ * 
+ * @note 此任务包含完整的初始化流程和主循环
+ */
+static void gyro_ball_task(void *p_arg)
+{
+    // ---- 硬件初始化 ----
+    
+    // 电源使能
+    power_en_enable(1);
+    os_time_dly(10);  // 等待电源稳定
+    
+    // I2C总线初始化
+    board_i2c_bus0_init();
+    
+    // u8g2显示屏初始化
+    u8g2_Setup_ssd1306_i2c_128x64_noname_f(&u8g2, U8G2_R0, 
+        u8g2_byte_cb, u8g2_gpio_and_delay_cb);
+    u8g2_InitDisplay(&u8g2);
+    u8g2_SetPowerSave(&u8g2, 0);
+    
+    // 传感器初始化
+    if (QMI8658_Init() < 0) {
+        printf("QMI8658 init failed\n");
+        u8g2_ClearBuffer(&u8g2);
+        u8g2_SetFont(&u8g2, u8g2_font_ncenB14_tr);
+        u8g2_DrawStr(&u8g2, 10, 30, "Init Failed");
+        u8g2_SendBuffer(&u8g2);
+        while (1) os_time_dly(100);
+    }
+    
+    // 陀螺仪校准
+    QMI8658_CalibrateGyro();
+    
+    // 显示欢迎界面
+    u8g2_ClearBuffer(&u8g2);
+    u8g2_SetFont(&u8g2, u8g2_font_ncenB14_tr);
+    u8g2_DrawStr(&u8g2, 20, 30, "GYRO BALL");
+    u8g2_SetFont(&u8g2, u8g2_font_7x13_tr);
+    u8g2_DrawStr(&u8g2, 35, 50, "Demo");
+    u8g2_SendBuffer(&u8g2);
+    os_time_dly(200);  // 显示2秒
+    
+    // 初始化小球位置
+    g_ball_state.x = SCREEN_CENTER_X;
+    g_ball_state.y = SCREEN_CENTER_Y;
+    g_ball_state.vx = 0;
+    g_ball_state.vy = 0;
+    g_trail_count = 0;
+    
+    printf("Gyro Ball Example Started\n");
+    
+    while (1) {
+        current_time = os_time_get();
+        
+        // 读取陀螺仪数据
+        if (QMI8658_ReadData(&sensor_data) == 0) {
+            // 更新速度（使用角速度）
+            g_ball_state.vx += sensor_data.gyr_x * g_ball_params.sensitivity;
+            g_ball_state.vy += sensor_data.gyr_y * g_ball_params.sensitivity;
+            
+            // 应用阻尼
+            g_ball_state.vx *= (1.0f - g_ball_params.damping);
+            g_ball_state.vy *= (1.0f - g_ball_params.damping);
+            
+            // 更新位置
+            g_ball_state.x += g_ball_state.vx;
+            g_ball_state.y += g_ball_state.vy;
+            
+            // 边界碰撞检测
+            handle_boundary_collision(&g_ball_state.x, &g_ball_state.vx,
+                                      PLAY_AREA_X_MIN, PLAY_AREA_X_MAX,
+                                      g_ball_params.radius);
+            handle_boundary_collision(&g_ball_state.y, &g_ball_state.vy,
+                                      PLAY_AREA_Y_MIN, PLAY_AREA_Y_MAX,
+                                      g_ball_params.radius);
+        }
+        
+        // 更新轨迹（每100ms）
+        if (current_time - last_trail_update_time >= TRAIL_UPDATE_INTERVAL) {
+            update_trail();
+            last_trail_update_time = current_time;
+        }
+        
+        // 渲染显示
+        u8g2_ClearBuffer(u8g2);
+        
+        draw_title_bar(u8g2);
+        draw_play_area(u8g2);
+        draw_trail(u8g2);
+        draw_ball(u8g2);
+        draw_params_bar(u8g2);
+        
+        u8g2_SendBuffer(u8g2);
+        
+        // 控制刷新率 ~20 FPS
+        os_time_dly(50);
+    }
+}
+
+// ============================================================================
+// 公共接口
+// ============================================================================
+
+void gyro_ball_example_start(void)
+{
+    // 创建OS任务
+    // 参数：任务函数, 参数, 优先级, 栈大小, 队列大小, 任务名
+    os_task_create(gyro_ball_task, NULL, 10, 1024, 0, "gyro_ball");
 }
 
 #endif /* ENABLE_EXAMPLE_GYRO_BALL */
