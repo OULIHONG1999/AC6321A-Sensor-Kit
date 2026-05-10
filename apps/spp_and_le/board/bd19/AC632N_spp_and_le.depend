@@ -19016,7 +19016,7 @@
 	"debug.h"
 	"uart_update.h"
 
-1778085211 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\drivers\qmi8658\qmi8658a.c
+1778412297 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\drivers\qmi8658\qmi8658a.c
 	"qmi8658a.h"
 	"../../board/board_pins.h"
 	"../i2c/i2c_bus.h"
@@ -19120,11 +19120,12 @@
 	"../../../drivers/i2c/i2c_bus.h"
 	"../csrc/u8g2.h"
 
-1778397560 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\mw\mw_runtime.c
+1778405529 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\mw\mw_runtime.c
 	"mw_runtime.h"
 	"../board/example_config.h"
 	"../examples/example_qmi8658/qmi8658_example.h"
 	"../examples/example_u8g2_dashboard/u8g2_dashboard.h"
+	"../examples/example_gyro_ball/gyro_ball_example.h"
 
 1776602911 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\drivers\oled\bmp.h
 
@@ -19162,13 +19163,13 @@
 	<math.h>
 	<string.h>
 
-1778402235 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\board\example_config.h
+1778405382 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\board\example_config.h
 
 1778397559 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658\qmi8658_example.h
 
 1778397559 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_u8g2_dashboard\u8g2_dashboard.h
 
-1778398327 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_u8g2_dashboard\u8g2_dashboard.c
+1778402363 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_u8g2_dashboard\u8g2_dashboard.c
 	"../../board/example_config.h"
 	"u8g2_dashboard.h"
 	"../../drivers/power_en/power_en.h"
@@ -19179,7 +19180,6 @@
 	"system/event.h"
 	"typedef.h"
 	<math.h>
-	<stdio.h>
 
 1778400938 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658\qmi8658_example.c
 	"../../board/example_config.h"
@@ -19193,4 +19193,6 @@
 	"os/os_api.h"
 	"system/event.h"
 	"typedef.h"
+
+1778406105 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_gyro_ball\gyro_ball_example.h
 

@@ -284,7 +284,7 @@ int QMI8658_CalibrateGyro(void) {
   QMI8658_DEBUG_PRINT("Gyro calibration started (%d samples)...\n", samples);
   
   // 等待传感器稳定
-  os_time_dly(100);
+  os_time_dly(50);
   
   for (int i = 0; i < samples; i++) {
     ret = QMI8658_ReadData(&data);
@@ -295,7 +295,7 @@ int QMI8658_CalibrateGyro(void) {
     gyr_x_sum += data.gyr_x;
     gyr_y_sum += data.gyr_y;
     gyr_z_sum += data.gyr_z;
-    os_time_dly(5);  // 缩短延迟，加快校准速度
+    os_time_dly(1);  // 缩短延迟，加快校准速度
   }
   
   g_calibration.gyr_offset_x = (int16_t)(gyr_x_sum / samples);
