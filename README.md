@@ -308,9 +308,18 @@ fw-AC63_BT_SDK/           # SDK根目录
 
 ## 📞 联系方式
 
-- 项目仓库：[GitHub链接]
-- 问题反馈：[Issues页面]
-- 技术讨论：[Discussions页面]
+- 🌐 官方网站：[https://qianbaii.cn/](https://qianbaii.cn/)
+- 📧 作者邮箱：[1756950720@qq.com](mailto:1756950720@qq.com)
+-  哔哩哔哩：[千白科技](https://space.bilibili.com/3546810423445874)
+- 📱 微信联系：
+
+<div align="center">
+  <img src="docs/WeChat_QR.png" alt="千白科技微信二维码" width="200" />
+  <p>扫码添加微信，获取技术支持</p>
+</div>
+
+- 💬 问题反馈：[Issues页面](../../issues)
+- 🤝 技术讨论：[Discussions页面](../../discussions)
 
 ---
 
