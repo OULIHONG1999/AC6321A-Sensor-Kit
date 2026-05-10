@@ -310,20 +310,20 @@ fw-AC63_BT_SDK/           # SDK根目录
 
 <table>
   <tr>
-    <td width="50%" valign="top">
-      <h3>📱 社交联系</h3>
-      <ul>
-        <li>🌐 官方网站：<a href="https://qianbaii.cn/">qianbaii.cn</a></li>
-        <li>📧 邮箱：<a href="mailto:1756950720@qq.com">1756950720@qq.com</a></li>
-        <li>📺 哔哩哔哩：<a href="https://space.bilibili.com/3546810423445874">千白科技</a></li>
+    <td width="50%" valign="top" style="padding: 10px; border: 1px solid #e1e4e8; border-radius: 6px; background: #f6f8fa;">
+      <h3 style="margin-top: 0;"> 社交联系</h3>
+      <ul style="padding-left: 20px;">
+        <li style="margin: 6px 0;">🌐 官方网站：<a href="https://qianbaii.cn/">qianbaii.cn</a></li>
+        <li style="margin: 6px 0;"> 邮箱：<a href="mailto:1756950720@qq.com">1756950720@qq.com</a></li>
+        <li style="margin: 6px 0;"> 哔哩哔哩：<a href="https://space.bilibili.com/3546810423445874">千白科技</a></li>
       </ul>
     </td>
-    <td width="50%" valign="top">
-      <h3>📱 微信联系</h3>
-      <p>微信号：<code>OULIHONG1999</code></p>
-      <p>扫码添加，获取技术支持</p>
-      <div align="center">
-        <img src="docs/WeChat_QR.png" alt="千白科技微信二维码" width="160" />
+    <td width="50%" valign="top" style="padding: 10px; border: 1px solid #e1e4e8; border-radius: 6px; background: #f6f8fa;">
+      <h3 style="margin-top: 0;">💬 微信联系</h3>
+      <p style="margin: 8px 0;">微信号：<code style="background: #e1e4e8; padding: 2px 6px; border-radius: 3px;">OULIHONG1999</code></p>
+      <p style="margin: 8px 0; color: #586069;">扫码添加，获取技术支持</p>
+      <div align="center" style="margin-top: 10px;">
+        <img src="docs/WeChat_QR.png" alt="千白科技微信二维码" width="140" style="border: 1px solid #e1e4e8; border-radius: 6px; padding: 5px; background: #fff;" />
       </div>
     </td>
   </tr>
