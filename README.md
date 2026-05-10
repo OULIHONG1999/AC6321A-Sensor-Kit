@@ -328,7 +328,7 @@ fw-AC63_BT_SDK/           # SDK根目录
 扫码添加，获取技术支持
 
 <div align="center">
-<img src="docs/WeChat_QR.png" alt="微信二维码" width="200" style="border: 1px solid #e1e4e8; border-radius: 6px; padding: 10px; background-color: #ffffff; margin-top: 10px;" />
+<img src="images/WeChat_QR.png" alt="微信二维码" width="200" style="border: 1px solid #e1e4e8; border-radius: 6px; padding: 10px; background-color: #ffffff; margin-top: 10px;" />
 </div>
 
 </td>
