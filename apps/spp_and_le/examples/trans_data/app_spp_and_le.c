@@ -290,6 +290,10 @@ static void spple_key_event_handler(struct sys_event *event) {
     event_type = event->u.key.event;
     key_value = event->u.key.value;
     log_info("app_key_evnet: %d,%d\n", event_type, key_value);
+    extern void example_key_handler(u8 key_value, u8 event_type);
+    example_key_handler(key_value, event_type);
+
+    return;
     /*Change Case To Idle Demo*/
 #if CONFIG_APP_SPP_LE_TO_IDLE
     if (event_type == KEY_EVENT_CLICK && key_value == TCFG_ADKEY_VALUE1) {
