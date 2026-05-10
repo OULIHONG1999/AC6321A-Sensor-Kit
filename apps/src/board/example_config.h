@@ -15,10 +15,10 @@
 /* ========== 示例选择（只能开启一个）========== */
 
 // QMI8658 IMU 传感器示例
-#define ENABLE_EXAMPLE_QMI8658          1
+#define ENABLE_EXAMPLE_QMI8658          0
 
 // u8g2 图形库仪表盘演示
-#define ENABLE_EXAMPLE_U8G2_DASHBOARD   0
+#define ENABLE_EXAMPLE_U8G2_DASHBOARD   1
 
 // BME280 温湿度气压传感器示例（待添加）
 #define ENABLE_EXAMPLE_BME280           0

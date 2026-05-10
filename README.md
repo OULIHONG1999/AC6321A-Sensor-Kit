@@ -130,58 +130,6 @@ apps/src/
 └── app/                      # 应用入口
 ```
 
-## 📚 API参考
-
-### QMI8658 驱动API
-
-#### 基础功能
-- 传感器初始化 `QMI8658_Init()`
-- 数据读取 `QMI8658_ReadData()` / `QMI8658_ReadPhysical()`
-- 温度读取 `QMI8658_ReadTemperature()`
-- 设备类型检测（QMI8658A / QMI8658C）
-
-#### 校准功能
-- 陀螺仪零偏校准 `QMI8658_CalibrateGyro()`
-- 加速度计校准 `QMI8658_CalibrateAccel()`
-- 校准数据读写 `QMI8658_GetCalibration()` / `QMI8658_SetCalibration()`
-
-#### FIFO缓冲（批量读取）
-初始化并启用 FIFO：
-```c
-QMI8658_FifoInit();
-```
-
-批量读取 FIFO 数据：
-```c
-QMI8658_Data_t fifo_data[16];
-uint8_t actual_count;
-
-int ret = QMI8658_FifoRead(fifo_data, 16, &actual_count);
-if (ret == 0) {
-    printf("FIFO frames: %d\n", actual_count);
-    for (int i = 0; i < actual_count; i++) {
-        printf("Frame %d: A(%d,%d,%d) G(%d,%d,%d)\n",
-            i, fifo_data[i].acc_x, fifo_data[i].acc_y, fifo_data[i].acc_z,
-            fifo_data[i].gyr_x, fifo_data[i].gyr_y, fifo_data[i].gyr_z);
-    }
-}
-```
-
-获取 FIFO 状态：
-```c
-uint8_t status;
-QMI8658_FifoGetStatus(&status);
-// status bit7=FIFO_EMPTY, bit6=FIFO_FULL, bit5=FIFO_OVF, bit4=FIFO_WTM
-
-uint8_t count;
-QMI8658_FifoGetCount(&count);  // 获取已缓存的帧数
-```
-
-FIFO 重置：
-```c
-QMI8658_FifoReset();
-```
-
 #### 数据转换
 ```c
 // 原始数据转物理量

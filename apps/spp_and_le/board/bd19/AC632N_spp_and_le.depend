@@ -19162,7 +19162,7 @@
 	<math.h>
 	<string.h>
 
-1778397559 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\board\example_config.h
+1778402235 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\board\example_config.h
 
 1778397559 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658\qmi8658_example.h
 
@@ -19181,7 +19181,7 @@
 	<math.h>
 	<stdio.h>
 
-1778399407 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658\qmi8658_example.c
+1778400938 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658\qmi8658_example.c
 	"../../board/example_config.h"
 	"../../lib/u8g2/port/u8g2_port.h"
 	"qmi8658_example.h"
