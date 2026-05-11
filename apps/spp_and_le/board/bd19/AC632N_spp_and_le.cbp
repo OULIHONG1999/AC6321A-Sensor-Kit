@@ -917,10 +917,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../../src/drivers/qmi8658/qmi8658a.h" />
+		<Unit filename="../../../src/examples/example_gyro_ball/gyro_ball_example.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../../src/examples/example_gyro_ball/gyro_ball_example.h" />
 		<Unit filename="../../../src/examples/example_qmi8658/qmi8658_example.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../../src/examples/example_qmi8658/qmi8658_example.h" />
+		<Unit filename="../../../src/examples/example_qmi8658_precision/qmi8658_precision_example.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../../src/examples/example_qmi8658_precision/qmi8658_precision_example.h" />
 		<Unit filename="../../../src/examples/example_u8g2_dashboard/u8g2_dashboard.c">
 			<Option compilerVar="CC" />
 		</Unit>
