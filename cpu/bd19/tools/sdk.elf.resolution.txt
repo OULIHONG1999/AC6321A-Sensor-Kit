@@ -6276,6 +6276,7 @@ obj/Release/apps/spp_and_le/app_main.o
 -r=obj/Release/apps/spp_and_le/app_main.o,get_charge_online_flag,l
 -r=obj/Release/apps/spp_and_le/app_main.o,check_power_on_key,pl
 -r=obj/Release/apps/spp_and_le/app_main.o,app_main,pl
+-r=obj/Release/apps/spp_and_le/app_main.o,bt_max_pwr_set,l
 -r=obj/Release/apps/spp_and_le/app_main.o,update_result_deal,l
 -r=obj/Release/apps/spp_and_le/app_main.o,printf,l
 -r=obj/Release/apps/spp_and_le/app_main.o,vbat_check_init,l
