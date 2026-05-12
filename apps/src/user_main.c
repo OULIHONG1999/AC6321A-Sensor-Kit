@@ -4,7 +4,9 @@
  */
 #include "app/app_sensor.h"
 
+
 void user_main(void)
 {
+    
     app_sensor_boot();
 }

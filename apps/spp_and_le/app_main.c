@@ -117,8 +117,11 @@ void check_power_on_key(void)
 }
 
 extern void user_main(void);
-void app_main()
-{
+extern void bt_max_pwr_set(u8 pwr, u8 pg_pwr, u8 iq_pwr, u8 ble_pwr);
+void app_main() {
+
+    bt_max_pwr_set(10, 5, 8, 10);//set max level
+  
     struct intent it;
 
     if (!UPDATE_SUPPORT_DEV_IS_NULL()) {
