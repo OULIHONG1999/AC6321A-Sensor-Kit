@@ -4,7 +4,7 @@
 #include "asm/clock.h"
 #include "asm/cpu.h"
 
-#if 0
+#if 1
 /*
     [[  注意!!!  ]]
     * 适用于带cfg_done的硬件IIC，另一种硬件IIC另作说明
@@ -218,7 +218,15 @@ void hw_iic_stop(hw_iic_dev iic)
     /* iic_disable(iic_regs[id]); */
     iic_host_send_stop(iic_regs[id]); //stop singal
     start_signal = 0;
-    while (!iic_host_is_stop_pending(iic_regs[id]));
+    // while (!iic_host_is_stop_pending(iic_regs[id]));
+    // ✅ 添加超时保护
+    u32 timeout = 50000;
+    while (!iic_host_is_stop_pending(iic_regs[id])) {
+        if (--timeout == 0) {
+            printf("[IIC_HW] STOP timeout!\n");
+            return;
+        }
+    }
 }
 
 u8 hw_iic_tx_byte(hw_iic_dev iic, u8 byte)
@@ -244,8 +252,16 @@ u8 hw_iic_tx_byte(hw_iic_dev iic, u8 byte)
         /* printf("st/\n"); */
     }
 
-    while (!iic_is_pnding(iic_regs[id]));
-
+    // while (!iic_is_pnding(iic_regs[id]));
+    // ========== 修改这里：添加超时保护 ==========
+    u32 timeout = 50000;  // 超时计数，约5ms
+    while (!iic_is_pnding(iic_regs[id])) {
+        if (--timeout == 0) {
+            printf("[IIC_HW] TX timeout! byte=0x%02X\n", byte);
+            return 1;  // 返回NACK表示失败
+        }
+    }
+    // ==========================================
     if (!iic_host_send_is_ack(iic_regs[id])) {
         ack = 1;
     }
@@ -270,7 +286,16 @@ u8 hw_iic_rx_byte(hw_iic_dev iic, u8 ack)
         iic_host_nack_auto_stop(iic_regs[id]); //硬件检测到nack(这个nack是我们硬件发出的), 自动长生stop信号
         iic_host_receive_continue_byte_stop(iic_regs[id]); //最后1byte, 完成后自动nack;
     }
-    while (!iic_is_pnding(iic_regs[id]));
+    // while (!iic_is_pnding(iic_regs[id]));
+        // ========== 修改这里：添加超时保护 ==========
+    u32 timeout = 50000;  // 超时计数，约5ms
+    while (!iic_is_pnding(iic_regs[id])) {
+        if (--timeout == 0) {
+            printf("[IIC_HW] RX timeout!\n");
+            return 0xFF;  // 返回0xFF表示失败
+        }
+    }
+    // ==========================================
     data = iic_buf_reg(iic_regs[id]);
     iic_pnding_clr(iic_regs[id]);
 
@@ -292,7 +317,15 @@ int hw_iic_write_buf(hw_iic_dev iic, const void *buf, int len)
         /* if (i == 0) { */
         /*     iic_kick_start(iic_regs[id]); //kick start */
         /* } */
-        while (!iic_is_pnding(iic_regs[id]));
+        // while (!iic_is_pnding(iic_regs[id]));
+            // ✅ 添加超时保护
+        u32 timeout = 50000;
+        while (!iic_is_pnding(iic_regs[id])) {
+            if (--timeout == 0) {
+                printf("[IIC_HW] write_buf timeout at index %d\n", i);
+                return i;  // 返回已写入的字节数
+            }
+        }
 
         if (iic_host_send_is_ack(iic_regs[id])) {
             iic_pnding_clr(iic_regs[id]);
@@ -321,7 +354,15 @@ int hw_iic_read_buf(hw_iic_dev iic, void *buf, int len)
             iic_host_nack_auto_stop(iic_regs[id]); //硬件检测到nack(这个nack是我们硬件发出的), 自动长生stop信号
             iic_host_receive_continue_byte_stop(iic_regs[id]); //最后1byte, 完成后自动nack;
         }
-        while (!iic_is_pnding(iic_regs[id]));
+        // while (!iic_is_pnding(iic_regs[id]));
+            // ✅ 添加超时保护
+        u32 timeout = 50000;
+        while (!iic_is_pnding(iic_regs[id])) {
+            if (--timeout == 0) {
+                printf("[IIC_HW] read_buf timeout at index %d\n", i);
+                return i;  // 返回已读取的字节数
+            }
+        }
         iic_pnding_clr(iic_regs[id]);
 
         ((u8 *)buf)[i] = iic_buf_reg(iic_regs[id]);

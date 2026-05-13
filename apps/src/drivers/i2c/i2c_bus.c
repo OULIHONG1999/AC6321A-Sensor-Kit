@@ -5,10 +5,35 @@
 #include "i2c_bus.h"
 #include "../../board/board_pins.h"
 #include "asm/iic_soft.h"
+#include "asm/iic_hw.h"
 #include "os/os_cpu.h"
 #include "system/includes.h"
 
 #define I2C_BUS_INDEX 0
+#define HW_I2C_BUS_INDEX 0
+
+// 通过定义USE_HARDWARE_I2C宏来选择使用硬件I2C还是软件I2C
+#define USE_HARDWARE_I2C
+
+#ifdef USE_HARDWARE_I2C
+    #define IIC_START                  hw_iic_start
+    #define IIC_STOP                   hw_iic_stop
+    #define IIC_TX_BYTE                hw_iic_tx_byte
+    #define IIC_RX_BYTE                hw_iic_rx_byte
+    #define IIC_WRITE_BUF              hw_iic_write_buf
+    #define IIC_READ_BUF               hw_iic_read_buf
+    #define IIC_INIT                   hw_iic_init
+    #define IIC_INDEX                  HW_I2C_BUS_INDEX
+#else
+    #define IIC_START                  soft_iic_start
+    #define IIC_STOP                   soft_iic_stop
+    #define IIC_TX_BYTE                soft_iic_tx_byte
+    #define IIC_RX_BYTE                soft_iic_rx_byte
+    #define IIC_WRITE_BUF              soft_iic_write_buf
+    #define IIC_READ_BUF               soft_iic_read_buf
+    #define IIC_INIT                   soft_iic_init
+    #define IIC_INDEX                  I2C_BUS_INDEX
+#endif
 
 const struct soft_iic_config soft_iic_cfg[] = {
     {
@@ -18,42 +43,55 @@ const struct soft_iic_config soft_iic_cfg[] = {
         .io_pu = 0,
     }};
 
+const struct hw_iic_config hw_iic_cfg[] = {
+    //iic0 data
+    {
+        //         SCL          SDA
+        .port = {BOARD_I2C_SCL, BOARD_I2C_SDA},
+        .baudrate = 100000,      //IIC通讯波特率
+        .hdrive = 0,             //是否打开IO口强驱
+        .io_filter = 1,          //是否打开滤波器（去纹波）
+        .io_pu = 1,              //是否打开上拉电阻，如果外部电路没有焊接上拉电阻需要置1
+        .role = IIC_MASTER,
+    },
+};
+
 void board_i2c_bus0_init(void)
 {
-    soft_iic_init(I2C_BUS_INDEX);
+    IIC_INIT(IIC_INDEX);
 }
 
 int i2c_bus_write_reg8(u8 addr7, u8 reg, u8 data)
 {
     OS_ENTER_CRITICAL();
 
-    soft_iic_start(I2C_BUS_INDEX);
+    IIC_START(IIC_INDEX);
 
-    u8 ack = soft_iic_tx_byte(I2C_BUS_INDEX, (u8)((addr7 << 1) | 0));
+    u8 ack = IIC_TX_BYTE(IIC_INDEX, (u8)((addr7 << 1) | 0));
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -2;
     }
 
-    ack = soft_iic_tx_byte(I2C_BUS_INDEX, reg);
+    ack = IIC_TX_BYTE(IIC_INDEX, reg);
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -3;
     }
 
-    ack = soft_iic_tx_byte(I2C_BUS_INDEX, data);
+    ack = IIC_TX_BYTE(IIC_INDEX, data);
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -3;
     }
 
-    soft_iic_stop(I2C_BUS_INDEX);
+    IIC_STOP(IIC_INDEX);
     OS_EXIT_CRITICAL();
 
     return 0;
@@ -68,18 +106,18 @@ int i2c_bus_write_buf(u8 addr7, const u8 *tx, unsigned tx_len)
 
     OS_ENTER_CRITICAL();
 
-    soft_iic_start(I2C_BUS_INDEX);
+    IIC_START(IIC_INDEX);
 
-    u8 ack = soft_iic_tx_byte(I2C_BUS_INDEX, (u8)((addr7 << 1) | 0));
+    u8 ack = IIC_TX_BYTE(IIC_INDEX, (u8)((addr7 << 1) | 0));
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -2;
     }
 
-    int ret = soft_iic_write_buf(I2C_BUS_INDEX, tx, tx_len);
-    soft_iic_stop(I2C_BUS_INDEX);
+    int ret = IIC_WRITE_BUF(IIC_INDEX, tx, tx_len);
+    IIC_STOP(IIC_INDEX);
     OS_EXIT_CRITICAL();
 
     return ret;
@@ -91,36 +129,36 @@ int i2c_bus_read_reg8(u8 addr7, u8 reg)
 
     OS_ENTER_CRITICAL();
 
-    soft_iic_start(I2C_BUS_INDEX);
+    IIC_START(IIC_INDEX);
 
-    u8 ack = soft_iic_tx_byte(I2C_BUS_INDEX, (u8)(addr7 << 1));
+    u8 ack = IIC_TX_BYTE(IIC_INDEX, (u8)(addr7 << 1));
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -2;
     }
 
-    ack = soft_iic_tx_byte(I2C_BUS_INDEX, reg);
+    ack = IIC_TX_BYTE(IIC_INDEX, reg);
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -3;
     }
 
-    soft_iic_start(I2C_BUS_INDEX);
+    IIC_START(IIC_INDEX);
 
-    ack = soft_iic_tx_byte(I2C_BUS_INDEX, (u8)((addr7 << 1) | 1));
+    ack = IIC_TX_BYTE(IIC_INDEX, (u8)((addr7 << 1) | 1));
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -2;
     }
 
-    data = soft_iic_rx_byte(I2C_BUS_INDEX, 0);
-    soft_iic_stop(I2C_BUS_INDEX);
+    data = IIC_RX_BYTE(IIC_INDEX, 0);
+    IIC_STOP(IIC_INDEX);
 
     OS_EXIT_CRITICAL();
 
@@ -136,30 +174,30 @@ int i2c_bus_read_buf(u8 addr7, u8 reg, u8 *rx, unsigned rx_len)
 
     OS_ENTER_CRITICAL();
 
-    soft_iic_start(I2C_BUS_INDEX);
+    IIC_START(IIC_INDEX);
 
-    u8 ack = soft_iic_tx_byte(I2C_BUS_INDEX, (u8)(addr7 << 1));
+    u8 ack = IIC_TX_BYTE(IIC_INDEX, (u8)(addr7 << 1));
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -2;
     }
 
-    ack = soft_iic_tx_byte(I2C_BUS_INDEX, reg);
+    ack = IIC_TX_BYTE(IIC_INDEX, reg);
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -3;
     }
 
-    soft_iic_start(I2C_BUS_INDEX);
+    IIC_START(IIC_INDEX);
 
-    ack = soft_iic_tx_byte(I2C_BUS_INDEX, (u8)((addr7 << 1) | 1));
+    ack = IIC_TX_BYTE(IIC_INDEX, (u8)((addr7 << 1) | 1));
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -2;
     }
@@ -168,16 +206,16 @@ int i2c_bus_read_buf(u8 addr7, u8 reg, u8 *rx, unsigned rx_len)
     {
         for (int i = 0; i < rx_len - 1; i++)
         {
-            rx[i] = soft_iic_rx_byte(I2C_BUS_INDEX, 1);
+            rx[i] = IIC_RX_BYTE(IIC_INDEX, 1);
         }
-        rx[rx_len - 1] = soft_iic_rx_byte(I2C_BUS_INDEX, 0);
+        rx[rx_len - 1] = IIC_RX_BYTE(IIC_INDEX, 0);
     }
     else
     {
-        rx[0] = soft_iic_rx_byte(I2C_BUS_INDEX, 0);
+        rx[0] = IIC_RX_BYTE(IIC_INDEX, 0);
     }
 
-    soft_iic_stop(I2C_BUS_INDEX);
+    IIC_STOP(IIC_INDEX);
     OS_EXIT_CRITICAL();
 
     return 0;
@@ -193,36 +231,36 @@ int i2c_bus_write_read(u8 addr7, const u8 *tx, unsigned tx_len, u8 *rx,
 
     OS_ENTER_CRITICAL();
 
-    soft_iic_start(I2C_BUS_INDEX);
+    IIC_START(IIC_INDEX);
 
-    u8 ack = soft_iic_tx_byte(I2C_BUS_INDEX, (u8)((addr7 << 1) | 0));
+    u8 ack = IIC_TX_BYTE(IIC_INDEX, (u8)((addr7 << 1) | 0));
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -2;
     }
 
-    int ret = soft_iic_write_buf(I2C_BUS_INDEX, tx, tx_len);
+    int ret = IIC_WRITE_BUF(IIC_INDEX, tx, tx_len);
     if (ret < 0)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return ret;
     }
 
-    soft_iic_start(I2C_BUS_INDEX);
+    IIC_START(IIC_INDEX);
 
-    ack = soft_iic_tx_byte(I2C_BUS_INDEX, (u8)((addr7 << 1) | 1));
+    ack = IIC_TX_BYTE(IIC_INDEX, (u8)((addr7 << 1) | 1));
     if (ack != 1)
     {
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_STOP(IIC_INDEX);
         OS_EXIT_CRITICAL();
         return -2;
     }
 
-    ret = soft_iic_read_buf(I2C_BUS_INDEX, rx, rx_len);
-    soft_iic_stop(I2C_BUS_INDEX);
+    ret = IIC_READ_BUF(IIC_INDEX, rx, rx_len);
+    IIC_STOP(IIC_INDEX);
 
     OS_EXIT_CRITICAL();
 
@@ -239,9 +277,9 @@ void i2c_bus_scan(void)
     {
         OS_ENTER_CRITICAL();
 
-        soft_iic_start(I2C_BUS_INDEX);
-        ret = soft_iic_tx_byte(I2C_BUS_INDEX, (u8)((addr7 << 1) | 0));
-        soft_iic_stop(I2C_BUS_INDEX);
+        IIC_START(IIC_INDEX);
+        ret = IIC_TX_BYTE(IIC_INDEX, (u8)((addr7 << 1) | 0));
+        IIC_STOP(IIC_INDEX);
 
         OS_EXIT_CRITICAL();
 

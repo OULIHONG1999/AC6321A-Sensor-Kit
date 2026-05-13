@@ -741,7 +741,7 @@ static int qmi8658_precision_init(void) {
  */
 static void qmi8658_precision_example_task(void *p_arg) {
     
-    // ---- 9.1 硬件初始化 ----
+    // ---- Step 1: 基础硬件初始化 ----
     
     // 电源使能
     power_en_enable(1);
@@ -749,7 +749,6 @@ static void qmi8658_precision_example_task(void *p_arg) {
     
     // I2C总线初始化
     board_i2c_bus0_init();
-    i2c_bus_scan();  // 扫描I2C设备
     
     // u8g2显示屏初始化
     u8g2_Setup_ssd1306_i2c_128x64_noname_f(&u8g2, U8G2_R0, 
@@ -757,16 +756,29 @@ static void qmi8658_precision_example_task(void *p_arg) {
     u8g2_InitDisplay(&u8g2);
     u8g2_SetPowerSave(&u8g2, 0);
     
-    // ---- 9.2 显示欢迎界面 ----
+    // ---- Step 2: 显示OLED开始页面 ----
     
     u8g2_ClearBuffer(&u8g2);
     u8g2_SetFont(&u8g2, u8g2_font_ncenB14_tr);
     u8g2_DrawStr(&u8g2, 10, 25, "QMI8658");
     u8g2_DrawStr(&u8g2, 5, 45, "Precision");
     u8g2_SendBuffer(&u8g2);
-    os_time_dly(200);  // 显示2秒
+    os_time_dly(150);  // 显示1.5秒
     
-    // ---- 9.3 传感器初始化 ----
+    // ---- Step 3: 显示QMI8658初始化介绍 ----
+    
+    u8g2_ClearBuffer(&u8g2);
+    u8g2_SetFont(&u8g2, u8g2_font_6x10_tr);
+    u8g2_DrawStr(&u8g2, 0, 12, "Initializing...");
+    u8g2_DrawStr(&u8g2, 0, 26, "QMI8658 IMU");
+    u8g2_DrawStr(&u8g2, 0, 40, "6-Axis Sensor");
+    u8g2_DrawStr(&u8g2, 0, 54, "Accel + Gyro");
+    u8g2_SendBuffer(&u8g2);
+    os_time_dly(100);  // 显示1秒
+    
+    // ---- Step 4: 真正初始化QMI8658传感器 ----
+    
+    i2c_bus_scan();  // 扫描I2C设备
     
     if (qmi8658_precision_init() < 0) {
         printf("QMI8658 precision init failed!\n");
@@ -777,7 +789,15 @@ static void qmi8658_precision_example_task(void *p_arg) {
         while (1) os_time_dly(100);
     }
     
-    // ---- 9.4 主循环 ----
+    // 初始化成功提示
+    u8g2_ClearBuffer(&u8g2);
+    u8g2_SetFont(&u8g2, u8g2_font_7x13_tr);
+    u8g2_DrawStr(&u8g2, 15, 25, "QMI8658");
+    u8g2_DrawStr(&u8g2, 20, 40, "Ready!");
+    u8g2_SendBuffer(&u8g2);
+    os_time_dly(80);  // 显示0.8秒
+    
+    // ---- Step 5: 进入主循环 ----
     
     QMI8658_Data_t raw_data;
     QMI8658_Physical_t phys_data;
@@ -886,7 +906,7 @@ static void qmi8658_precision_example_task(void *p_arg) {
             }
         }
         
-        os_time_dly(5);  // 5ms延迟，最大化响应速度
+        os_time_dly(1);  // 5ms延迟，最大化响应速度
     }
 }
 

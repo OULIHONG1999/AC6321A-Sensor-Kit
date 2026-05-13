@@ -2,19 +2,9 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Release" />
-	<File name="..\..\..\src\examples\example_qmi8658\qmi8658_example.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="..\..\..\src\mw\mw_runtime.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3102" topLine="86" />
-		</Cursor>
-	</File>
-	<File name="..\..\..\src\lib\u8g2\csrc\u8g2_font.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="26447" topLine="953" />
-		</Cursor>
-	</File>
-	<File name="..\..\..\src\examples\example_gyro_ball\gyro_ball_example.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5581" topLine="169" />
+			<Cursor1 position="644" topLine="2" />
 		</Cursor>
 	</File>
 	<File name="..\..\examples\trans_data\app_spp_and_le.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -22,29 +12,9 @@
 			<Cursor1 position="7696" topLine="276" />
 		</Cursor>
 	</File>
-	<File name="..\..\..\..\include_lib\driver\cpu\bd19\asm\cpu.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="..\..\..\src\lib\u8g2\port\u8g2_port.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="126" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="..\..\..\src\lib\u8g2\csrc\u8g2_box.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3019" topLine="95" />
-		</Cursor>
-	</File>
-	<File name="..\..\..\src\drivers\qmi8658\qmi8658_attitude.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1992" topLine="59" />
-		</Cursor>
-	</File>
-	<File name="..\..\..\src\lib\u8g2\csrc\u8g2_setup.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5526" topLine="178" />
-		</Cursor>
-	</File>
-	<File name="..\..\..\src\lib\u8g2\csrc\u8x8.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6524" topLine="196" />
+			<Cursor1 position="74" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="..\..\include\app_main.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -52,9 +22,9 @@
 			<Cursor1 position="110" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="..\..\..\src\lib\u8g2\port\u8g2_port.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="..\..\..\src\lib\u8g2\csrc\u8x8.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="74" topLine="0" />
+			<Cursor1 position="6524" topLine="196" />
 		</Cursor>
 	</File>
 	<File name="board_ac632n_demo.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -62,9 +32,39 @@
 			<Cursor1 position="17649" topLine="507" />
 		</Cursor>
 	</File>
-	<File name="..\..\..\src\mw\mw_runtime.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="..\..\..\src\examples\example_qmi8658\qmi8658_example.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="644" topLine="2" />
+			<Cursor1 position="3102" topLine="86" />
+		</Cursor>
+	</File>
+	<File name="..\..\..\src\drivers\qmi8658\qmi8658_attitude.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1992" topLine="59" />
+		</Cursor>
+	</File>
+	<File name="..\..\..\src\examples\example_gyro_ball\gyro_ball_example.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5581" topLine="169" />
+		</Cursor>
+	</File>
+	<File name="..\..\..\src\lib\u8g2\csrc\u8g2_setup.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5526" topLine="178" />
+		</Cursor>
+	</File>
+	<File name="..\..\..\..\include_lib\driver\cpu\bd19\asm\cpu.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="126" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="..\..\..\src\lib\u8g2\csrc\u8g2_font.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="26447" topLine="953" />
+		</Cursor>
+	</File>
+	<File name="..\..\..\src\lib\u8g2\csrc\u8g2_box.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3019" topLine="95" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
