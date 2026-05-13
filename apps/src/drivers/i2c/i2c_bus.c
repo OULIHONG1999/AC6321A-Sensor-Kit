@@ -273,7 +273,10 @@ void i2c_bus_scan(void)
     u8 count = 0;
     printf("i2c_bus_scan\n");
 
-    for (u8 addr7 = 0; addr7 < 128; addr7++)
+    // ✅ 优化：只扫描常用地址范围（0x08-0x77），跳过保留地址
+    // 0x00-0x07: 保留地址
+    // 0x78-0x7F: 10位地址保留
+    for (u8 addr7 = 0x08; addr7 < 0x78; addr7++)
     {
         OS_ENTER_CRITICAL();
 

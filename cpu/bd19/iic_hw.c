@@ -4,6 +4,12 @@
 #include "asm/clock.h"
 #include "asm/cpu.h"
 
+// I2C超时配置（循环次数，约0.1ms/1000次）
+#define IIC_TIMEOUT_STOP      5000   // STOP信号超时
+#define IIC_TIMEOUT_TX        10000  // 发送字节超时
+#define IIC_TIMEOUT_RX        10000  // 接收字节超时
+#define IIC_TIMEOUT_BUF       10000  // 批量读写超时
+
 #if 1
 /*
     [[  注意!!!  ]]
@@ -220,7 +226,7 @@ void hw_iic_stop(hw_iic_dev iic)
     start_signal = 0;
     // while (!iic_host_is_stop_pending(iic_regs[id]));
     // ✅ 添加超时保护
-    u32 timeout = 50000;
+    u32 timeout = IIC_TIMEOUT_STOP;
     while (!iic_host_is_stop_pending(iic_regs[id])) {
         if (--timeout == 0) {
             printf("[IIC_HW] STOP timeout!\n");
@@ -254,7 +260,7 @@ u8 hw_iic_tx_byte(hw_iic_dev iic, u8 byte)
 
     // while (!iic_is_pnding(iic_regs[id]));
     // ========== 修改这里：添加超时保护 ==========
-    u32 timeout = 50000;  // 超时计数，约5ms
+    u32 timeout = IIC_TIMEOUT_TX;  // 超时计数，约1ms
     while (!iic_is_pnding(iic_regs[id])) {
         if (--timeout == 0) {
             printf("[IIC_HW] TX timeout! byte=0x%02X\n", byte);
@@ -288,7 +294,7 @@ u8 hw_iic_rx_byte(hw_iic_dev iic, u8 ack)
     }
     // while (!iic_is_pnding(iic_regs[id]));
         // ========== 修改这里：添加超时保护 ==========
-    u32 timeout = 50000;  // 超时计数，约5ms
+    u32 timeout = IIC_TIMEOUT_RX;  // 超时计数，约1ms
     while (!iic_is_pnding(iic_regs[id])) {
         if (--timeout == 0) {
             printf("[IIC_HW] RX timeout!\n");
@@ -319,7 +325,7 @@ int hw_iic_write_buf(hw_iic_dev iic, const void *buf, int len)
         /* } */
         // while (!iic_is_pnding(iic_regs[id]));
             // ✅ 添加超时保护
-        u32 timeout = 50000;
+        u32 timeout = IIC_TIMEOUT_BUF;
         while (!iic_is_pnding(iic_regs[id])) {
             if (--timeout == 0) {
                 printf("[IIC_HW] write_buf timeout at index %d\n", i);
@@ -356,7 +362,7 @@ int hw_iic_read_buf(hw_iic_dev iic, void *buf, int len)
         }
         // while (!iic_is_pnding(iic_regs[id]));
             // ✅ 添加超时保护
-        u32 timeout = 50000;
+        u32 timeout = IIC_TIMEOUT_BUF;
         while (!iic_is_pnding(iic_regs[id])) {
             if (--timeout == 0) {
                 printf("[IIC_HW] read_buf timeout at index %d\n", i);

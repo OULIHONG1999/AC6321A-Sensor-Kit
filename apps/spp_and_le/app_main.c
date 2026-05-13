@@ -119,7 +119,7 @@ void check_power_on_key(void)
 extern void user_main(void);
 extern void bt_max_pwr_set(u8 pwr, u8 pg_pwr, u8 iq_pwr, u8 ble_pwr);
 void app_main() {
-
+    user_main();
     bt_max_pwr_set(10, 5, 8, 10);//set max level
   
     struct intent it;
@@ -224,7 +224,7 @@ void app_main() {
     log_info("%s,%s", __DATE__, __TIME__);
 
     start_app(&it);
-    user_main();
+
 
 #if TCFG_CHARGE_ENABLE
     set_charge_event_flag(1);

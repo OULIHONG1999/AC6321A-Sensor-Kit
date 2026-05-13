@@ -2251,7 +2251,6 @@ obj/Release/apps/src/examples/example_qmi8658_precision/qmi8658_precision_exampl
 -r=obj/Release/apps/src/examples/example_qmi8658_precision/qmi8658_precision_example.o,u8g2_SetFont,l
 -r=obj/Release/apps/src/examples/example_qmi8658_precision/qmi8658_precision_example.o,u8g2_DrawStr,l
 -r=obj/Release/apps/src/examples/example_qmi8658_precision/qmi8658_precision_example.o,u8g2_SendBuffer,l
--r=obj/Release/apps/src/examples/example_qmi8658_precision/qmi8658_precision_example.o,i2c_bus_scan,l
 -r=obj/Release/apps/src/examples/example_qmi8658_precision/qmi8658_precision_example.o,QMI8658_ReadData,l
 -r=obj/Release/apps/src/examples/example_qmi8658_precision/qmi8658_precision_example.o,i2c_bus_read_buf,l
 -r=obj/Release/apps/src/examples/example_qmi8658_precision/qmi8658_precision_example.o,i2c_bus_read_reg8,l
@@ -6300,6 +6299,7 @@ obj/Release/apps/spp_and_le/app_main.o
 -r=obj/Release/apps/spp_and_le/app_main.o,get_charge_online_flag,l
 -r=obj/Release/apps/spp_and_le/app_main.o,check_power_on_key,pl
 -r=obj/Release/apps/spp_and_le/app_main.o,app_main,pl
+-r=obj/Release/apps/spp_and_le/app_main.o,user_main,l
 -r=obj/Release/apps/spp_and_le/app_main.o,bt_max_pwr_set,l
 -r=obj/Release/apps/spp_and_le/app_main.o,update_result_deal,l
 -r=obj/Release/apps/spp_and_le/app_main.o,printf,l
@@ -6307,7 +6307,6 @@ obj/Release/apps/spp_and_le/app_main.o
 -r=obj/Release/apps/spp_and_le/app_main.o,check_power_on_voltage,l
 -r=obj/Release/apps/spp_and_le/app_main.o,log_print,l
 -r=obj/Release/apps/spp_and_le/app_main.o,start_app,l
--r=obj/Release/apps/spp_and_le/app_main.o,user_main,l
 -r=obj/Release/apps/spp_and_le/app_main.o,set_charge_event_flag,l
 -r=obj/Release/apps/spp_and_le/app_main.o,app_switch,pl
 -r=obj/Release/apps/spp_and_le/app_main.o,get_current_app,l
