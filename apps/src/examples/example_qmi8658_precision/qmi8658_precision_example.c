@@ -23,6 +23,7 @@
 #include "../../drivers/qmi8658/qmi8658a.h"
 #include "../../drivers/qmi8658/qmi8658_reg.h"
 #include "../../drivers/oled/oled_utils.h"  // 添加scaled_int_to_str函数
+#include "battery_monitor.h"  // 电量监控模块
 #include "os/os_api.h"
 #include "system/event.h"
 #include "typedef.h"
@@ -125,6 +126,7 @@ typedef struct {
 // ========== 4. 全局变量 ==========
 static display_mode_t g_current_mode = MODE_RAW;
 static uint8_t g_frozen = 0;  // 显示冻结标志
+static battery_info_t* g_battery_info = NULL;  // 电量信息指针
 
 #if ENABLE_MODULE_PEAK_TEST
 static peak_data_t g_peak = {0};
@@ -198,6 +200,57 @@ static int clamp(int value, int min_val, int max_val) {
 }
 
 /**
+ * @brief 绘制顶部电量状态栏
+ * @note 占用 y=0~12 区域，内容区从 y=14 开始
+ */
+static void draw_battery_status_bar(void) {
+    if (!g_battery_info) return;
+    
+    char str[16];
+    
+    // === 绘制状态栏背景框 ===
+    u8g2_DrawFrame(&u8g2, 0, 0, 128, 12);  // 外边框
+    
+    // === 左侧：电池图标 + 百分比 ===
+    u8g2_SetFont(&u8g2, u8g2_font_5x7_tr);
+    u8g2_DrawStr(&u8g2, 2, 9, "BAT:");
+    
+    // 绘制电池外框（12x6像素）
+    u8g2_DrawFrame(&u8g2, 26, 3, 12, 6);
+    
+    // 绘制电池正极（右侧小突起）
+    u8g2_DrawBox(&u8g2, 38, 4, 2, 4);
+    
+    // 根据电量填充电池内部
+    uint8_t fill_width = (g_battery_info->percentage * 10) / 100;
+    if (fill_width > 0) {
+        u8g2_DrawBox(&u8g2, 27, 4, fill_width, 4);
+    }
+    
+    // 显示百分比
+    sprintf(str, "%d%%", g_battery_info->percentage);
+    u8g2_DrawStr(&u8g2, 42, 9, str);
+    
+    // === 右侧：电压值 ===
+    sprintf(str, "%dmV", g_battery_info->voltage_mv);
+    u8g2_DrawStr(&u8g2, 88, 9, str);
+    
+    // === 低电量警告（红色闪烁效果用实心框表示）===
+    if (g_battery_info->is_low_battery) {
+        static uint8_t blink_count = 0;
+        if (++blink_count % 10 == 0) {  // 每10帧闪烁一次（更快）
+            u8g2_SetDrawColor(&u8g2, 0);  // 黑色
+            u8g2_DrawBox(&u8g2, 1, 1, 126, 10);  // 填充背景
+            u8g2_SetDrawColor(&u8g2, 1);  // 恢复白色
+            u8g2_DrawStr(&u8g2, 40, 9, "LOW!");  // 显示警告
+        }
+    }
+    
+    // === 分隔线（状态栏和内容区之间）===
+    u8g2_DrawHLine(&u8g2, 0, 12, 128);
+}
+
+/**
  * @brief 加速度原始值转换为g
  * @param raw 原始数据（int16）
  * @return 加速度值（单位：g）
@@ -256,106 +309,118 @@ static void display_data_mode(display_mode_t mode,
            mode, raw_data->acc_x, raw_data->acc_y, raw_data->acc_z);
     
     u8g2_ClearBuffer(&u8g2);
+    
+    // 绘制电量状态栏
+    draw_battery_status_bar();
+    
     u8g2_SetFont(&u8g2, u8g2_font_6x10_tr);
     
-    // 仅在左右分栏模式绘制分隔线
+    // 仅在左右分栏模式绘制分隔线（Y起点从 0 改为 14，长度从 64 改为 50）
     if (mode == MODE_RAW || mode == MODE_PHYSICAL) {
-        u8g2_DrawVLine(&u8g2, 63, 0, 64);
+        u8g2_DrawVLine(&u8g2, 63, 14, 50);
     }
     
     switch (mode) {
         case MODE_RAW:
             printf("[RAW_MODE] Drawing RAW data\n");
-            // 标题
-            u8g2_DrawStr(&u8g2, 0, 10, "[RAW]");
+            // 标题（Y=14+4=18）
+            u8g2_DrawStr(&u8g2, 0, 22, "[RAW]");
             
-            // 左侧：加速度原始值（整数）
-            u8g2_DrawStr(&u8g2, 2, 24, "AX:");
-            sprintf(str, "%d", -raw_data->acc_x);  // 直接显示整数
-            u8g2_DrawStr(&u8g2, 20, 24, str);
-            
-            u8g2_DrawStr(&u8g2, 2, 36, "AY:");
-            sprintf(str, "%d", -raw_data->acc_y);
+            // 左侧：加速度原始值（所有Y坐标+12）
+            u8g2_DrawStr(&u8g2, 2, 36, "AX:");
+            sprintf(str, "%d", -raw_data->acc_x);
             u8g2_DrawStr(&u8g2, 20, 36, str);
             
-            u8g2_DrawStr(&u8g2, 2, 48, "AZ:");
-            sprintf(str, "%d", -raw_data->acc_z);
+            u8g2_DrawStr(&u8g2, 2, 48, "AY:");
+            sprintf(str, "%d", -raw_data->acc_y);
             u8g2_DrawStr(&u8g2, 20, 48, str);
             
-            // 右侧：陀螺仪原始值（整数）
-            u8g2_DrawStr(&u8g2, 66, 24, "GX:");
-            sprintf(str, "%d", -raw_data->gyr_x);
-            u8g2_DrawStr(&u8g2, 84, 24, str);
+            u8g2_DrawStr(&u8g2, 2, 60, "AZ:");
+            sprintf(str, "%d", -raw_data->acc_z);
+            u8g2_DrawStr(&u8g2, 20, 60, str);
             
-            u8g2_DrawStr(&u8g2, 66, 36, "GY:");
-            sprintf(str, "%d", -raw_data->gyr_y);
+            // 右侧：陀螺仪原始值（所有Y坐标+12）
+            u8g2_DrawStr(&u8g2, 66, 36, "GX:");
+            sprintf(str, "%d", -raw_data->gyr_x);
             u8g2_DrawStr(&u8g2, 84, 36, str);
             
-            u8g2_DrawStr(&u8g2, 66, 48, "GZ:");
-            sprintf(str, "%d", -raw_data->gyr_z);
+            u8g2_DrawStr(&u8g2, 66, 48, "GY:");
+            sprintf(str, "%d", -raw_data->gyr_y);
             u8g2_DrawStr(&u8g2, 84, 48, str);
+            
+            u8g2_DrawStr(&u8g2, 66, 60, "GZ:");
+            sprintf(str, "%d", -raw_data->gyr_z);
+            u8g2_DrawStr(&u8g2, 84, 60, str);
             break;
             
         case MODE_PHYSICAL:
             printf("[PHYSICAL_MODE] Drawing PHYSICAL data\n");
-            // 标题
-            u8g2_DrawStr(&u8g2, 0, 10, "[PHYSICAL]");
+            // 标题（Y=22）
+            u8g2_DrawStr(&u8g2, 0, 22, "[PHYSICAL]");
             
-            // 左侧：加速度(g) - 传入反转后的RAW值
-            u8g2_DrawStr(&u8g2, 2, 24, "X:");
-            scaled_int_to_str(-raw_data->acc_x, str, 5, (int)ACC_SCALE_FACTOR);  // 反转X
-            u8g2_DrawStr(&u8g2, 12, 24, str);
-            u8g2_DrawStr(&u8g2, 2, 36, "Y:");
-            scaled_int_to_str(-raw_data->acc_y, str, 5, (int)ACC_SCALE_FACTOR);  // 反转Y
+            // 左侧：加速度(g)（所有Y坐标+12）
+            u8g2_DrawStr(&u8g2, 2, 36, "X:");
+            scaled_int_to_str(-raw_data->acc_x, str, 5, (int)ACC_SCALE_FACTOR);
             u8g2_DrawStr(&u8g2, 12, 36, str);
-            u8g2_DrawStr(&u8g2, 2, 48, "Z:");
-            scaled_int_to_str(-raw_data->acc_z, str, 5, (int)ACC_SCALE_FACTOR);  // 反转Z
+            
+            u8g2_DrawStr(&u8g2, 2, 48, "Y:");
+            scaled_int_to_str(-raw_data->acc_y, str, 5, (int)ACC_SCALE_FACTOR);
             u8g2_DrawStr(&u8g2, 12, 48, str);
             
-            // 右侧：陀螺仪(dps) - 传入反转后的RAW值
-            u8g2_DrawStr(&u8g2, 66, 24, "X:");
-            scaled_int_to_str(-raw_data->gyr_x, str, 5, (int)GYR_SCALE_FACTOR);  // 反转X
-            u8g2_DrawStr(&u8g2, 76, 24, str);
-            u8g2_DrawStr(&u8g2, 66, 36, "Y:");
-            scaled_int_to_str(-raw_data->gyr_y, str, 5, (int)GYR_SCALE_FACTOR);  // 反转Y
+            u8g2_DrawStr(&u8g2, 2, 60, "Z:");
+            scaled_int_to_str(-raw_data->acc_z, str, 5, (int)ACC_SCALE_FACTOR);
+            u8g2_DrawStr(&u8g2, 12, 60, str);
+            
+            // 右侧：陀螺仪(dps)（所有Y坐标+12）
+            u8g2_DrawStr(&u8g2, 66, 36, "X:");
+            scaled_int_to_str(-raw_data->gyr_x, str, 5, (int)GYR_SCALE_FACTOR);
             u8g2_DrawStr(&u8g2, 76, 36, str);
-            u8g2_DrawStr(&u8g2, 66, 48, "Z:");
-            scaled_int_to_str(-raw_data->gyr_z, str, 5, (int)GYR_SCALE_FACTOR);  // 反转Z
+            
+            u8g2_DrawStr(&u8g2, 66, 48, "Y:");
+            scaled_int_to_str(-raw_data->gyr_y, str, 5, (int)GYR_SCALE_FACTOR);
             u8g2_DrawStr(&u8g2, 76, 48, str);
+            
+            u8g2_DrawStr(&u8g2, 66, 60, "Z:");
+            scaled_int_to_str(-raw_data->gyr_z, str, 5, (int)GYR_SCALE_FACTOR);
+            u8g2_DrawStr(&u8g2, 76, 60, str);
             break;
             
         case MODE_ACCEL_ONLY:
-            u8g2_DrawStr(&u8g2, 0, 10, "[ACCEL ONLY]");
+            u8g2_DrawStr(&u8g2, 0, 22, "[ACCEL ONLY]");
             
-            // 左侧：标签
-            u8g2_DrawStr(&u8g2, 5, 28, "X:");
-            u8g2_DrawStr(&u8g2, 5, 40, "Y:");
-            u8g2_DrawStr(&u8g2, 5, 52, "Z:");
+            // 左侧：标签（Y从36/48/60）
+            u8g2_DrawStr(&u8g2, 5, 40, "X:");
+            u8g2_DrawStr(&u8g2, 5, 52, "Y:");
+            u8g2_DrawStr(&u8g2, 5, 64, "Z:");
             
-            // 右侧：数值（传入反转后的RAW值）
-            scaled_int_to_str(-raw_data->acc_x, str, 5, (int)ACC_SCALE_FACTOR);  // 反转X
-            u8g2_DrawStr(&u8g2, 25, 28, str);
-            scaled_int_to_str(-raw_data->acc_y, str, 5, (int)ACC_SCALE_FACTOR);  // 反转Y
+            // 右侧：数值
+            scaled_int_to_str(-raw_data->acc_x, str, 5, (int)ACC_SCALE_FACTOR);
             u8g2_DrawStr(&u8g2, 25, 40, str);
-            scaled_int_to_str(-raw_data->acc_z, str, 5, (int)ACC_SCALE_FACTOR);  // 反转Z
+            
+            scaled_int_to_str(-raw_data->acc_y, str, 5, (int)ACC_SCALE_FACTOR);
             u8g2_DrawStr(&u8g2, 25, 52, str);
+            
+            scaled_int_to_str(-raw_data->acc_z, str, 5, (int)ACC_SCALE_FACTOR);
+            u8g2_DrawStr(&u8g2, 25, 64, str);
             break;
             
         case MODE_GYRO_ONLY:
-            u8g2_DrawStr(&u8g2, 0, 10, "[GYRO ONLY]");
+            u8g2_DrawStr(&u8g2, 0, 22, "[GYRO ONLY]");
             
             // 左侧：标签
-            u8g2_DrawStr(&u8g2, 5, 28, "X:");
-            u8g2_DrawStr(&u8g2, 5, 40, "Y:");
-            u8g2_DrawStr(&u8g2, 5, 52, "Z:");
+            u8g2_DrawStr(&u8g2, 5, 40, "X:");
+            u8g2_DrawStr(&u8g2, 5, 52, "Y:");
+            u8g2_DrawStr(&u8g2, 5, 64, "Z:");
             
-            // 右侧：数值（传入反转后的RAW值）
-            scaled_int_to_str(-raw_data->gyr_x, str, 5, (int)GYR_SCALE_FACTOR);  // 反转X
-            u8g2_DrawStr(&u8g2, 25, 28, str);
-            scaled_int_to_str(-raw_data->gyr_y, str, 5, (int)GYR_SCALE_FACTOR);  // 反转Y
+            // 右侧：数值
+            scaled_int_to_str(-raw_data->gyr_x, str, 5, (int)GYR_SCALE_FACTOR);
             u8g2_DrawStr(&u8g2, 25, 40, str);
-            scaled_int_to_str(-raw_data->gyr_z, str, 5, (int)GYR_SCALE_FACTOR);  // 反转Z
+            
+            scaled_int_to_str(-raw_data->gyr_y, str, 5, (int)GYR_SCALE_FACTOR);
             u8g2_DrawStr(&u8g2, 25, 52, str);
+            
+            scaled_int_to_str(-raw_data->gyr_z, str, 5, (int)GYR_SCALE_FACTOR);
+            u8g2_DrawStr(&u8g2, 25, 64, str);
             break;
     }
     
@@ -399,43 +464,47 @@ static void level_mode_task(QMI8658_Data_t *data) {
     ball_y = clamp(ball_y, 0, 63);     // 上下边界
     
     u8g2_ClearBuffer(&u8g2);
+    
+    // 绘制电量状态栏
+    draw_battery_status_bar();
+    
     u8g2_SetFont(&u8g2, u8g2_font_6x10_tr);
     
-    // === 左侧数据显示区（0-63像素）===
+    // === 左侧数据显示区（0-63像素，Y从14开始）===
     
-    // 标题
-    u8g2_DrawStr(&u8g2, 0, 10, "LEVEL");
+    // 标题（Y=22）
+    u8g2_DrawStr(&u8g2, 0, 22, "LEVEL");
     
-    // Pitch角度
+    // Pitch角度（Y=36）
     char str[32];
     int pitch_int = (int)(pitch * 10);
     int pitch_abs = (pitch_int < 0) ? -pitch_int : pitch_int;
     sprintf(str, "P:%d.%d", pitch_int/10, pitch_abs%10);
-    u8g2_DrawStr(&u8g2, 0, 24, str);
+    u8g2_DrawStr(&u8g2, 0, 36, str);
     
-    // Roll角度
+    // Roll角度（Y=48）
     int roll_int = (int)(roll * 10);
     int roll_abs = (roll_int < 0) ? -roll_int : roll_int;
     sprintf(str, "R:%d.%d", roll_int/10, roll_abs%10);
-    u8g2_DrawStr(&u8g2, 0, 36, str);
+    u8g2_DrawStr(&u8g2, 0, 48, str);
     
-    // Z轴加速度
+    // Z轴加速度（Y=60）
     int acc_z_fixed = (int)(acc_z_g * 100);
     int acc_z_abs = (acc_z_fixed < 0) ? -acc_z_fixed : acc_z_fixed;
     sprintf(str, "Z:%d.%dg", acc_z_fixed/100, acc_z_abs%100);
-    u8g2_DrawStr(&u8g2, 0, 48, str);
+    u8g2_DrawStr(&u8g2, 0, 60, str);
     
-    // === 右侧平衡球显示区（64-127像素）===
+    // === 右侧平衡球显示区（64-127像素，Y从14开始）===
     
-    // 绘制64x64边界框
-    u8g2_DrawFrame(&u8g2, 64, 0, 64, 64);
+    // 绘制64x50边界框（高度从54改为50，Y起点从10改为14）
+    u8g2_DrawFrame(&u8g2, 64, 14, 64, 50);
     
-    // 绘制十字准星（中心点96,32）
-    u8g2_DrawHLine(&u8g2, 64, 32, 64);   // 水平线
-    u8g2_DrawVLine(&u8g2, 96, 0, 64);    // 垂直线
+    // 绘制十字准星（中心点96,39）
+    u8g2_DrawHLine(&u8g2, 64, 39, 64);   // 水平线
+    u8g2_DrawVLine(&u8g2, 96, 14, 50);   // 垂直线
     
-    // 绘制小球
-    u8g2_DrawDisc(&u8g2, ball_x, ball_y, 4, U8G2_DRAW_ALL);
+    // 绘制小球（ball_y需要+14偏移）
+    u8g2_DrawDisc(&u8g2, ball_x, ball_y + 14, 4, U8G2_DRAW_ALL);
     
     u8g2_SendBuffer(&u8g2);
 }
@@ -467,18 +536,24 @@ static void peak_test_mode(QMI8658_Physical_t *phys) {
     update_peak_data(phys);
     
     u8g2_ClearBuffer(&u8g2);
+    
+    // 绘制电量状态栏
+    draw_battery_status_bar();
+    
     u8g2_SetFont(&u8g2, u8g2_font_6x10_tr);
     
-    u8g2_DrawStr(&u8g2, 0, 10, "[PEAK TEST]");
+    // 标题（Y=22）
+    u8g2_DrawStr(&u8g2, 0, 22, "[PEAK TEST]");
     
     char str[32];
+    // 所有Y坐标+12
     sprintf(str, "Cur AX:%d.%02dg", (int)(phys->acc_x_g * 100), (int)(fabsf(phys->acc_x_g) * 100) % 100);
-    u8g2_DrawStr(&u8g2, 0, 22, str);
-    sprintf(str, "Pk  AX:%d.%02dg*", (int)(g_peak.acc_peak_x * 100), (int)(fabsf(g_peak.acc_peak_x) * 100) % 100);
     u8g2_DrawStr(&u8g2, 0, 34, str);
-    sprintf(str, "Cur AY:%d.%02dg", (int)(phys->acc_y_g * 100), (int)(fabsf(phys->acc_y_g) * 100) % 100);
+    
+    sprintf(str, "Pk  AX:%d.%02dg*", (int)(g_peak.acc_peak_x * 100), (int)(fabsf(g_peak.acc_peak_x) * 100) % 100);
     u8g2_DrawStr(&u8g2, 0, 46, str);
-    sprintf(str, "Pk  AY:%d.%02dg*", (int)(g_peak.acc_peak_y * 100), (int)(fabsf(g_peak.acc_peak_y) * 100) % 100);
+    
+    sprintf(str, "Cur AY:%d.%02dg", (int)(phys->acc_y_g * 100), (int)(fabsf(phys->acc_y_g) * 100) % 100);
     u8g2_DrawStr(&u8g2, 0, 58, str);
     
     u8g2_SendBuffer(&u8g2);
@@ -542,21 +617,25 @@ static void tap_detect_mode(void) {
     check_tap_event();
     
     u8g2_ClearBuffer(&u8g2);
+    
+    // 绘制电量状态栏
+    draw_battery_status_bar();
+    
     u8g2_SetFont(&u8g2, u8g2_font_6x10_tr);
     
-    u8g2_DrawStr(&u8g2, 0, 10, "[TAP DETECT]");
+    // 标题（Y=22）
+    u8g2_DrawStr(&u8g2, 0, 22, "[TAP DETECT]");
     
     char str[32];
+    // 所有Y坐标+12
     sprintf(str, "Thresh:%d", g_tap_threshold);
-    u8g2_DrawStr(&u8g2, 0, 24, str);
-    
-    sprintf(str, "Single:%d", g_single_tap_count);
     u8g2_DrawStr(&u8g2, 0, 36, str);
     
-    sprintf(str, "Double:%d", g_double_tap_count);
+    sprintf(str, "Single:%d", g_single_tap_count);
     u8g2_DrawStr(&u8g2, 0, 48, str);
     
-    u8g2_DrawStr(&u8g2, 0, 60, "KEY3:+Thresh");
+    sprintf(str, "Double:%d", g_double_tap_count);
+    u8g2_DrawStr(&u8g2, 0, 60, str);
     
     u8g2_SendBuffer(&u8g2);
 }
@@ -602,35 +681,39 @@ static void stats_mode(QMI8658_Physical_t *phys) {
                      g_stats.sample_count, &mean_z, &stddev_z);
     
     u8g2_ClearBuffer(&u8g2);
+    
+    // 绘制电量状态栏
+    draw_battery_status_bar();
+    
     u8g2_SetFont(&u8g2, u8g2_font_6x10_tr);
     
     char str[32];
     sprintf(str, "[STATS] N=%lu", g_stats.sample_count);
-    u8g2_DrawStr(&u8g2, 0, 10, str);
+    u8g2_DrawStr(&u8g2, 0, 22, str);
     
-    // X轴统计
+    // X轴统计（Y=34）
     int mean_x_fixed = (int)(mean_x * 100);
     int std_x_fixed = (int)(stddev_x * 100);
     sprintf(str, "AX:%d.%02d S:%d.%02d", 
             mean_x_fixed/100, (mean_x_fixed<0?-mean_x_fixed:mean_x_fixed)%100,
             std_x_fixed/100, (std_x_fixed<0?-std_x_fixed:std_x_fixed)%100);
-    u8g2_DrawStr(&u8g2, 0, 22, str);
+    u8g2_DrawStr(&u8g2, 0, 34, str);
     
-    // Y轴统计
+    // Y轴统计（Y=46）
     int mean_y_fixed = (int)(mean_y * 100);
     int std_y_fixed = (int)(stddev_y * 100);
     sprintf(str, "AY:%d.%02d S:%d.%02d", 
             mean_y_fixed/100, (mean_y_fixed<0?-mean_y_fixed:mean_y_fixed)%100,
             std_y_fixed/100, (std_y_fixed<0?-std_y_fixed:std_y_fixed)%100);
-    u8g2_DrawStr(&u8g2, 0, 34, str);
+    u8g2_DrawStr(&u8g2, 0, 46, str);
     
-    // Z轴统计
+    // Z轴统计（Y=58）
     int mean_z_fixed = (int)(mean_z * 100);
     int std_z_fixed = (int)(stddev_z * 100);
     sprintf(str, "AZ:%d.%02d S:%d.%02d", 
             mean_z_fixed/100, (mean_z_fixed<0?-mean_z_fixed:mean_z_fixed)%100,
             std_z_fixed/100, (std_z_fixed<0?-std_z_fixed:std_z_fixed)%100);
-    u8g2_DrawStr(&u8g2, 0, 46, str);
+    u8g2_DrawStr(&u8g2, 0, 58, str);
     
     u8g2_SendBuffer(&u8g2);
 }
@@ -653,17 +736,33 @@ static void temp_monitor_mode(void) {
     float calibrated_temp = temperature - TEMP_CALIBRATION_OFFSET;
     
     u8g2_ClearBuffer(&u8g2);
-    u8g2_SetFont(&u8g2, u8g2_font_ncenB14_tr);
     
+    // 绘制电量状态栏
+    draw_battery_status_bar();
+    
+    // === 温度显示 - 居中美观布局 ===
+    
+    // 绘制外框
+    u8g2_DrawFrame(&u8g2, 10, 20, 108, 40);
+    
+    // 标题（居中）
+    u8g2_SetFont(&u8g2, u8g2_font_7x13_tr);
+    u8g2_DrawStr(&u8g2, 48, 35, "TEMP");
+    
+    // 温度值（大字体，居中）
+    u8g2_SetFont(&u8g2, u8g2_font_ncenB14_tr);
     char str[32];
     int temp_fixed = (int)(calibrated_temp * 100);
     int temp_abs = (temp_fixed < 0) ? -temp_fixed : temp_fixed;
-    u8g2_DrawStr(&u8g2, 10, 25, "Temp");
-    sprintf(str, "%d.%02d C", temp_fixed/100, temp_abs%100);
-    u8g2_DrawStr(&u8g2, 15, 45, str);
+    sprintf(str, "%d.%02d", temp_fixed/100, temp_abs%100);
     
-    u8g2_SetFont(&u8g2, u8g2_font_5x7_tr);
-    u8g2_DrawStr(&u8g2, 5, 60, "(Calibrated)");
+    // 计算字符串宽度并居中
+    uint16_t str_width = u8g2_GetStrWidth(&u8g2, str);
+    u8g2_DrawStr(&u8g2, (128 - str_width) / 2, 52, str);
+    
+    // 单位符号
+    u8g2_SetFont(&u8g2, u8g2_font_7x13_tr);
+    u8g2_DrawStr(&u8g2, 95, 52, "°C");
     
     u8g2_SendBuffer(&u8g2);
 }
@@ -747,6 +846,10 @@ static void qmi8658_precision_example_task(void *p_arg) {
     power_en_enable(1);
     os_time_dly(10);  // 等待电源稳定
     
+    // 初始化电量监控
+    battery_monitor_init();
+    g_battery_info = battery_monitor_get_info();
+    
     // I2C总线初始化
     board_i2c_bus0_init();
     
@@ -803,6 +906,9 @@ static void qmi8658_precision_example_task(void *p_arg) {
     QMI8658_Physical_t phys_data;
     
     while (1) {
+        // 更新电量数据（内部有5秒间隔控制）
+        battery_monitor_update();
+        
         if (g_frozen) {
             os_time_dly(10);
             continue;

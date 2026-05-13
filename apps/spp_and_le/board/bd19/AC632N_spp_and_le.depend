@@ -19211,7 +19211,7 @@
 
 1778424630 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658_precision\qmi8658_precision_example.h
 
-1778650340 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658_precision\qmi8658_precision_example.c
+1778663128 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658_precision\qmi8658_precision_example.c
 	"../../board/example_config.h"
 	"qmi8658_precision_example.h"
 	"../../drivers/power_en/power_en.h"
@@ -19221,8 +19221,19 @@
 	"../../drivers/qmi8658/qmi8658a.h"
 	"../../drivers/qmi8658/qmi8658_reg.h"
 	"../../drivers/oled/oled_utils.h"
+	"battery_monitor.h"
 	"os/os_api.h"
 	"system/event.h"
 	"typedef.h"
 	<math.h>
+
+1778663128 e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658_precision\battery_monitor.h
+	"typedef.h"
+	"generic/typedef.h"
+
+1778663204 source:e:\work\jieli\ac6321a_sensor_develop_broad\fw-ac63_bt_sdk\apps\src\examples\example_qmi8658_precision\battery_monitor.c
+	"battery_monitor.h"
+	"generic/typedef.h"
+	"asm/adc_api.h"
+	"os/os_api.h"
 
